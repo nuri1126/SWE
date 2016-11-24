@@ -21,13 +21,30 @@ public class UserClass {
 			}else{System.out.print("틀렸습니다.");login();}
 		}else{System.out.print("틀렸습니다.");login();}
 	}
-	public void userMain(){
+	public void userMain() throws IOException{
+		InputStreamReader inputStreamReader = new InputStreamReader(System.in);
+		BufferedReader inputNumber = new BufferedReader(inputStreamReader);
 		while(true){
+			System.out.println("원하는 작업을 입력하세요.");
 			System.out.println("1.Change id or password");
 			System.out.println("2.PhoneBook");
 			System.out.println("3.Schedule");
 			System.out.println("4.Memo");
 			System.out.println("0.Logout");
+			System.out.print(">>>");
+			switch(inputNumber.readLine()){
+			case "1":
+				break;
+			case "2":
+				break;
+			case "3":
+				break;
+			case "4":
+				break;
+			case "0":System.out.println("안녕히가세요.");
+				System.exit(0);
+				break;
+			}
 		}
 	}
 	public static void main(String[] args) throws IOException {
