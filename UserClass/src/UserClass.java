@@ -1,4 +1,5 @@
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -51,21 +52,24 @@ public class UserClass {
 	}
 	public void getUserInfo(){
 		FileReader filereader = null;
+		String path = UserClass.class.getResource("").getPath();
 		try{
-			filereader =  new FileReader("user");
+			filereader =  new FileReader(path+"user.txt");
 			String content = null;
 			BufferedReader bufferedreader = new BufferedReader(filereader,1024);
 			
 			while((content=bufferedreader.readLine())!=null){
 				String getSubstring = content.substring(0,3);
-				if(getSubstring.equals("id: ")){
+				System.out.println(getSubstring);
+				if(getSubstring.equals("id:")){
 					userId = content.substring(4);
-				}else if(getSubstring.equals("pw: ")){
+					System.out.println(userId);
+				}else if(getSubstring.equals("pw:")){
 					userPassword = content.substring(4);
 				}
 			}
 		}catch(IOException e){
-			
+			System.out.println(e.toString());
 		}
 	}
 	public static void main(String[] args) throws IOException {
