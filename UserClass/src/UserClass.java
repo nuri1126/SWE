@@ -1,11 +1,13 @@
 import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class UserClass {
-	String userId="1311713";
-	String userPassword="a1311713";
+	String userId = null;
+	String userPassword = null;
 	public UserClass() throws IOException{
+		getUserInfo();
 		login();
 	}
 	public void login() throws IOException{
@@ -45,6 +47,25 @@ public class UserClass {
 				System.exit(0);
 				break;
 			}
+		}
+	}
+	public void getUserInfo(){
+		FileReader filereader = null;
+		try{
+			filereader =  new FileReader("user");
+			String content = null;
+			BufferedReader bufferedreader = new BufferedReader(filereader,1024);
+			
+			while((content=bufferedreader.readLine())!=null){
+				String getSubstring = content.substring(0,3);
+				if(getSubstring.equals("id: ")){
+					userId = content.substring(4);
+				}else if(getSubstring.equals("pw: ")){
+					userPassword = content.substring(4);
+				}
+			}
+		}catch(IOException e){
+			
 		}
 	}
 	public static void main(String[] args) throws IOException {
