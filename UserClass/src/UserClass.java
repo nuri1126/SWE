@@ -62,10 +62,10 @@ public class UserClass {
 				String getSubstring = content.substring(0,3);
 				System.out.println(getSubstring);
 				if(getSubstring.equals("id:")){
-					userId = content.substring(4);
+					userId = content.substring(3);
 					System.out.println(userId);
 				}else if(getSubstring.equals("pw:")){
-					userPassword = content.substring(4);
+					userPassword = content.substring(3);
 				}
 			}
 		}catch(IOException e){
