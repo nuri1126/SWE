@@ -12,14 +12,21 @@ public class UserClass {
 		System.out.print("회원님의 아이디를 입력해주세요. \n>>>");
 		InputStreamReader inputStreamReader = new InputStreamReader(System.in);
 		BufferedReader inputId = new BufferedReader(inputStreamReader);
+		BufferedReader inputPassword = new BufferedReader(inputStreamReader);
+		if(isLogin(inputId,inputPassword)){
+			userMain();
+		}else{
+			login();
+		}
+	}
+	public boolean isLogin(BufferedReader inputId,BufferedReader inputPassword) throws IOException{
 		if(inputId.readLine().equals(userId)){
 			System.out.print("회원님의 패스워드를 입력해주세요. \n>>>");
-			BufferedReader inputPassword = new BufferedReader(inputStreamReader);
 			if(inputPassword.readLine().equals(userPassword)){
 				System.out.println(userId+"님, "+"환영합니다.");
-				userMain();
-			}else{System.out.print("틀렸습니다.");login();}
-		}else{System.out.print("틀렸습니다.");login();}
+				return true;
+			}else{System.out.print("틀렸습니다.");return false;}
+		}else{System.out.print("틀렸습니다.");return false;}
 	}
 	public void userMain() throws IOException{
 		InputStreamReader inputStreamReader = new InputStreamReader(System.in);
