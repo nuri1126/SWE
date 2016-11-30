@@ -33,7 +33,7 @@ public class UserClass {
 			System.out.println("0.Logout");
 			System.out.print(">>>");
 			switch(inputNumber.readLine()){
-			case "1":
+			case "1":changeIdAndPassword();
 				break;
 			case "2":
 				break;
@@ -46,6 +46,9 @@ public class UserClass {
 				break;
 			}
 		}
+	}
+	public void changeIdAndPassword(){
+		
 	}
 	public static void main(String[] args) throws IOException {
 		UserClass user = new UserClass();
