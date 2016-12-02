@@ -41,7 +41,8 @@ public class UserClass {
 				break;
 			case "4":
 				break;
-			case "0":System.out.println("안녕히가세요.");
+			case "0":
+				System.out.println("안녕히가세요.");
 				System.exit(0);
 				break;
 			}
@@ -49,16 +50,5 @@ public class UserClass {
 	}
 	public static void main(String[] args) throws IOException {
 		UserClass user = new UserClass();
-	}
-}
-class Memo {
-	private String memoContent;
-	private int memoNumber;
-	private String memoDate;
-	
-	public Memo(String memoContent, int memoNumber, String memoDate) {
-		this.memoContent = memoContent;
-		this.memoNumber = memoNumber;
-		this.memoDate = memoDate;
 	}
 }
