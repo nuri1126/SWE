@@ -50,5 +50,15 @@ public class UserClass {
 	public static void main(String[] args) throws IOException {
 		UserClass user = new UserClass();
 	}
-
+}
+class Memo {
+	private String memoContent;
+	private int memoNumber;
+	private String memoDate;
+	
+	public Memo(String memoContent, int memoNumber, String memoDate) {
+		this.memoContent = memoContent;
+		this.memoNumber = memoNumber;
+		this.memoDate = memoDate;
+	}
 }
