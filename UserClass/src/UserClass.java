@@ -40,6 +40,7 @@ public class UserClass {
 			case "3":
 				break;
 			case "4":
+				new MemoClass();
 				break;
 			case "0":
 				System.out.println("안녕히가세요.");
@@ -50,5 +51,68 @@ public class UserClass {
 	}
 	public static void main(String[] args) throws IOException {
 		UserClass user = new UserClass();
+	}
+}
+class Memo {
+	private String memoContent;
+	private int memoNumber;
+	private String memoDate;
+	
+	public Memo(String memoContent, int memoNumber, String memoDate) {
+		this.memoContent = memoContent;
+		this.memoNumber = memoNumber;
+		this.memoDate = memoDate;
+	}
+}
+class MemoClass {
+	InputStreamReader inputStreamReader = new InputStreamReader(System.in);
+	
+	public MemoClass() throws IOException {
+		memoMain();
+	}
+	void memoMain() throws IOException {
+		BufferedReader inputNumber = new BufferedReader(inputStreamReader);
+		boolean managingMemo = true;
+		while(managingMemo){
+			System.out.println("원하는 작업을 입력하세요.");
+			System.out.println("1.Add Memo");
+			System.out.println("2.View All Memo");
+			System.out.println("3.Delete Memo");
+			System.out.println("0.Quit");
+			System.out.print(">>>");
+			switch(inputNumber.readLine()){
+			case "1":
+				add();
+				break;
+			case "2":
+				view();
+				break;
+			case "3":
+				BufferedReader memoNumber = new BufferedReader(inputStreamReader);
+				System.out.println("지울 메모 번호를 입력하세요.");
+				System.out.print(">>>");
+				int deleteNumber = Integer.parseInt(memoNumber.readLine());
+				delete(deleteNumber);
+				break;
+			case "0":
+				managingMemo = false;
+				break;
+			}
+		}
+	}
+	void add() throws IOException {
+	
+	}
+	void view() {
+		
+	}
+	void delete(int memoNumber) {
+		
+	}
+	void fileSave(Memo memo) {
+		
+	}
+	void fileOpen(Memo memo) {
+		
 	}
 }
