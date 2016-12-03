@@ -1,6 +1,8 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class UserClass {
 	String userId="1311713";
@@ -63,10 +65,13 @@ class Memo {
 		this.memoNumber = memoNumber;
 		this.memoDate = memoDate;
 	}
+	public void setMemoNumber(int memoNumber) {
+		this.memoNumber = memoNumber;
+	}
 }
 class MemoClass {
 	InputStreamReader inputStreamReader = new InputStreamReader(System.in);
-	
+	final int initialMemoNumber = -1;
 	public MemoClass() throws IOException {
 		memoMain();
 	}
@@ -89,8 +94,7 @@ class MemoClass {
 				break;
 			case "3":
 				BufferedReader memoNumber = new BufferedReader(inputStreamReader);
-				System.out.println("지울 메모 번호를 입력하세요.");
-				System.out.print(">>>");
+				System.out.println("지울 메모 번호를 입력하세요. \n>>>");
 				int deleteNumber = Integer.parseInt(memoNumber.readLine());
 				delete(deleteNumber);
 				break;
@@ -101,7 +105,30 @@ class MemoClass {
 		}
 	}
 	void add() throws IOException {
-	
+		BufferedReader tempContent = new BufferedReader(inputStreamReader);
+		System.out.println("메모 내용을 입력하세요. \n>>>");
+		String inputContent = tempContent.readLine();
+		boolean validAnswer = true;
+		while(validAnswer){
+			System.out.println("메모를 추가하시겠습니까?(Y/N) \n>>>");
+			BufferedReader tempAnswer = new BufferedReader(inputStreamReader);
+			String answer = tempAnswer.readLine();
+			if(answer.equals("Y")) {
+				Date tempToday = new Date();
+				SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				String today = transFormat.format(tempToday);
+				Memo memo = new Memo(inputContent, initialMemoNumber, today);
+				fileSave(memo);
+			}
+			else if(answer.equals("N")){
+				System.out.println("메모 작성을 취소합니다.");
+				break;
+			}
+			else{
+				System.out.println("Y 또는 N를 입력해주세요.");
+				validAnswer = false;
+			}
+		}
 	}
 	void view() {
 		
@@ -113,6 +140,9 @@ class MemoClass {
 		
 	}
 	void fileOpen(Memo memo) {
+		
+	}
+	void updateNumber() {
 		
 	}
 }
