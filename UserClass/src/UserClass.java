@@ -44,6 +44,7 @@ public class UserClass {
 			System.out.print(">>>");
 			switch(inputNumber.readLine()){
 			case "1":
+				ChangeInformationMain();
 				break;
 			case "2":
 				break;
@@ -59,6 +60,35 @@ public class UserClass {
 				break;
 			}
 		}
+	}
+	public void ChangeInformationMain() throws IOException{
+		InputStreamReader inputStreamReader = new InputStreamReader(System.in);
+		BufferedReader inputNumber = new BufferedReader(inputStreamReader);
+		boolean managingInfo = true;
+		while(true){
+			System.out.println("원하는 작업을 입력하세요.");
+			System.out.println("1.Change id");
+			System.out.println("2.Change password");
+			System.out.println("0.Quit");
+			System.out.print(">>>");
+			switch(inputNumber.readLine()){
+			case "1":
+				ChangeId();
+				break;
+			case "2":
+				ChangePassword();
+				break;
+			case "0":
+				managingInfo=false;
+				break;
+			}
+		}	
+	}
+	public void ChangeId(){
+		
+	}
+	public void ChangePassword(){
+		
 	}
 	public static void main(String[] args) throws IOException {
 		UserClass user = new UserClass();
@@ -200,19 +230,6 @@ class MemoClass {
 			memoVector.get(i).setMemoNumber(i+1);
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 class Schedule implements Serializable {
 	private String scheduleContent;
