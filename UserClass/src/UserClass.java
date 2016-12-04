@@ -79,6 +79,9 @@ public class UserClass {
 			System.out.println(e.toString());
 		}
 	}
+	public void changeIdAndPassword(){
+		
+	}
 	public static void main(String[] args) throws IOException {
 		UserClass user = new UserClass();
 	}
