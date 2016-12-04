@@ -48,6 +48,7 @@ public class UserClass {
 			case "2":
 				break;
 			case "3":
+				new ScheduleClass();
 				break;
 			case "4":
 				new MemoClass();
@@ -197,5 +198,156 @@ class MemoClass {
 	void updateNumber() {
 		for(int i=0 ; i < memoVector.size() ; i++)
 			memoVector.get(i).setMemoNumber(i+1);
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class Schedule implements Serializable {
+	private String scheduleContent;
+	private int scheduleNumber;
+	private String scheduleDate;
+	public Schedule(String scheduleContent, int scheduleNumber, String scheduleDate) {
+		this.scheduleContent = scheduleContent;
+		this.scheduleNumber = scheduleNumber;
+		this.scheduleDate = scheduleDate;
+	}
+	public int getScheduleNumber() {
+		return scheduleNumber;
+	}
+	public void setScheduleNumber(int scheduleNumber) {
+		this.scheduleNumber = scheduleNumber;
+	}
+	@Override
+	public String toString() {
+		return "["+scheduleNumber+"]"+"Content : " + scheduleContent + ", Date : " + scheduleDate;
+	}
+}
+class ScheduleClass {
+	InputStreamReader inputStreamReader = new InputStreamReader(System.in);
+	Vector<Schedule> scheduleVector = new Vector<Schedule>();
+	final int initialScheduleNumber = -1;
+	public ScheduleClass() throws IOException {
+		scheduleMain();
+	}
+	void scheduleMain() throws IOException {
+		BufferedReader inputNumber = new BufferedReader(inputStreamReader);
+		boolean managingSchedule = true;
+		File file = new File("schedule.txt");
+		if(file.exists()){
+			try {
+				fileOpen();
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+		}
+		while(managingSchedule){
+			System.out.println("----------MEMO----------");
+			System.out.println("원하는 작업을 입력하세요.");
+			System.out.println("1.Add Schedule");
+			System.out.println("2.View All Schedule");
+			System.out.println("3.Delete Schedule");
+			System.out.println("0.Quit");
+			System.out.print(">>>");
+			switch(inputNumber.readLine()){
+				case "1":
+					add();
+					break;
+				case "2":
+					view();
+					break;
+				case "3":
+					if(scheduleVector.isEmpty()){
+						System.out.println("스케줄이 없습니다.");
+						break;
+					}
+					BufferedReader tempNumber = new BufferedReader(inputStreamReader);
+					System.out.println("지울 스케줄 번호를 입력하세요.");
+					System.out.print(">>>");
+					int scheduleNumber = Integer.parseInt(tempNumber.readLine());
+					delete(scheduleNumber);
+					break;
+				case "0":
+					System.out.println("스케줄 작업에서 나갑니다.");
+					fileSave(scheduleVector);
+					managingSchedule = false;
+					break;
+				default :
+					System.out.println("0~3 사이의 숫자를 입력하세요!");
+					break;
+			}
+		}
+	}
+	void add() throws IOException {
+		BufferedReader tempContent = new BufferedReader(inputStreamReader);
+		System.out.println("스케줄 내용을 입력하세요.");
+		System.out.print(">>>");
+		String inputContent = tempContent.readLine();
+		System.out.println("스케줄 날짜를 입력하세요.(yyyy-MM-dd)");
+		System.out.print(">>>");
+		String inputDate = tempContent.readLine();
+		
+		while(true){
+			System.out.println("스케줄을 추가하시겠습니까?(Y/N)");
+			System.out.print(">>>");
+			BufferedReader tempAnswer = new BufferedReader(inputStreamReader);
+			String answer = tempAnswer.readLine();
+			if(answer.equals("Y")) {
+				Schedule schedule = new Schedule(inputContent, initialScheduleNumber, inputDate);
+				scheduleVector.add(schedule);
+				System.out.println("스케줄을 저장하였습니다!");
+				updateNumber();
+				break;
+			} else if(answer.equals("N")){
+				System.out.println("스케줄 작성을 취소합니다.");
+				break;
+			} else
+				System.out.println("Y 또는 N를 입력해주세요!");
+		}
+	}
+	void view() {
+		if(scheduleVector.isEmpty()){
+			System.out.println("스케줄이 없습니다.");
+			return;
+		}
+		for(int i = 0 ; i < scheduleVector.size() ; i++){
+			System.out.println(scheduleVector.get(i).toString());
+		}
+	}
+	void delete(int scheduleNumber) {
+		for(int i = 0 ; i < scheduleVector.size() ; i++){
+			Schedule tempSchedule = scheduleVector.get(i);
+			if(tempSchedule.getScheduleNumber()==scheduleNumber){
+				scheduleVector.remove(i);
+				updateNumber();
+				System.out.println(scheduleNumber+"번 스케줄을 삭제했습니다!");
+				return;
+			}
+		}
+		System.out.println(scheduleNumber+"번에 해당하는 스케줄이 없습니다. view메뉴로 스케줄을 확인하세요.");
+	}
+	void fileSave(Object schedule) throws IOException {
+		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("schedule.txt"));
+		oos.writeObject(schedule);
+		oos.close();
+	}
+	void fileOpen() throws FileNotFoundException, IOException, ClassNotFoundException	{
+		ObjectInputStream ois = new ObjectInputStream(new FileInputStream("schedule.txt"));
+		scheduleVector = (Vector<Schedule>) ois.readObject();
+	}
+	void updateNumber() {
+		for(int i=0 ; i < scheduleVector.size() ; i++)
+			scheduleVector.get(i).setScheduleNumber(i+1);
 	}
 }
