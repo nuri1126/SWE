@@ -85,7 +85,22 @@ public class UserClass {
 		}	
 	}
 	public void ChangeId(){
-		
+		InputStreamReader inputStreamReader = new InputStreamReader(System.in);
+		BufferedReader inputNumber = new BufferedReader(inputStreamReader);
+		String inputId,changeId;
+		while(true){
+			System.out.println("현재 아이디를 입력하세요.");
+			try {
+				inputId = inputNumber.readLine();
+				if(inputId.equals(userId)){
+					System.out.println("변결할 아이디를 입력하세요.");
+					changeId = inputNumber.readLine();
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 	public void ChangePassword(){
 		
