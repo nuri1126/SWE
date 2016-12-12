@@ -1,8 +1,11 @@
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
@@ -13,11 +16,37 @@ import java.util.Date;
 import java.util.Vector;
 
 public class UserClass {
-	String userId="1311713";
-	String userPassword="a1311713";
-	public UserClass() throws IOException {
+	String userId = null;
+	String userPassword = null;
+	public UserClass() throws IOException{
+		getUserInfo();
 		login();
 	}
+	public void getUserInfo(){
+		FileReader filereader = null;
+		String path = UserClass.class.getResource("").getPath();
+		try{
+			filereader =  new FileReader(path+"user.txt");
+			String content = null;
+			BufferedReader bufferedreader = new BufferedReader(filereader,1024);
+			
+			while((content=bufferedreader.readLine())!=null){
+				String getSubstring = content.substring(0,3);
+				System.out.println(getSubstring);
+				if(getSubstring.equals("id:")){
+					userId = content.substring(3);
+					System.out.println(userId);
+				}else if(getSubstring.equals("pw:")){
+					userPassword = content.substring(3);
+					System.out.println(userPassword);
+				}
+			}
+			filereader.close();
+		}catch(IOException e){
+			System.out.println(e.toString());
+		}
+	}
+	
 	public void login() throws IOException {
 		System.out.print("회원님의 아이디를 입력해주세요. \n>>>");
 		InputStreamReader inputStreamReader = new InputStreamReader(System.in);
@@ -31,6 +60,7 @@ public class UserClass {
 			}else{System.out.print("틀렸습니다.");login();}
 		}else{System.out.print("틀렸습니다.");login();}
 	}
+	
 	public void userMain() throws IOException {
 		InputStreamReader inputStreamReader = new InputStreamReader(System.in);
 		BufferedReader inputNumber = new BufferedReader(inputStreamReader);
@@ -61,6 +91,7 @@ public class UserClass {
 			}
 		}
 	}
+	
 	public void ChangeInformationMain() throws IOException{
 		InputStreamReader inputStreamReader = new InputStreamReader(System.in);
 		BufferedReader inputNumber = new BufferedReader(inputStreamReader);
@@ -84,17 +115,26 @@ public class UserClass {
 			}
 		}	
 	}
-	public void ChangeId(){
+	
+	public void ChangeId() throws IOException{
+		FileWriter filewriter = new FileWriter(UserClass.class.getResource("").getPath()+"user.txt");
+		String content = null;
+		boolean manageId = true;
+		
 		InputStreamReader inputStreamReader = new InputStreamReader(System.in);
 		BufferedReader inputNumber = new BufferedReader(inputStreamReader);
 		String inputId,changeId;
-		while(true){
+		while(manageId){
 			System.out.println("현재 아이디를 입력하세요.");
 			try {
 				inputId = inputNumber.readLine();
 				if(inputId.equals(userId)){
 					System.out.println("변결할 아이디를 입력하세요.");
 					changeId = inputNumber.readLine();
+					content = "id:"+changeId+"\n"+"pw:"+userPassword;
+					filewriter.write(content);
+					manageId = false;
+					filewriter.close();
 				}
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -102,7 +142,33 @@ public class UserClass {
 			}
 		}
 	}
-	public void ChangePassword(){
+	
+	public void ChangePassword() throws IOException{
+		FileWriter filewriter = new FileWriter(UserClass.class.getResource("").getPath()+"user.txt");
+		String content = null;
+		BufferedWriter bufferedwriter = new BufferedWriter(filewriter,1024);
+		boolean managePw = true;
+		
+		InputStreamReader inputStreamReader = new InputStreamReader(System.in);
+		BufferedReader inputNumber = new BufferedReader(inputStreamReader);
+		String inputpw,changepw;
+		while(managePw){
+			System.out.println("현재 패스워드를 입력하세요.");
+			try {
+				inputpw = inputNumber.readLine();
+				if(inputpw.equals(userPassword)){
+					System.out.println("변결할 패스워드를 입력하세요.");
+					changepw = inputNumber.readLine();
+					content = "id:"+userId+"\n"+"pw:"+changepw;
+					filewriter.write(content);
+					managePw = false;
+					filewriter.close();
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		
 	}
 	public static void main(String[] args) throws IOException {
