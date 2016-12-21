@@ -272,8 +272,13 @@ class MemoClass {
 					BufferedReader tempNumber = new BufferedReader(inputStreamReader);
 					System.out.println("Please enter the memo number to clear.");
 					System.out.print(">>>");
-					int memoNumber = Integer.parseInt(tempNumber.readLine());
-					delete(memoNumber);
+					String tempStr = tempNumber.readLine();
+					if(isStringNum(tempStr)){
+						int memoNumber = Integer.parseInt(tempStr);
+						delete(memoNumber);
+					}
+					else
+						System.out.println("Please enter the number!");
 					break;
 				case "0":
 					System.out.println("Leave the memo menu.");
@@ -286,6 +291,15 @@ class MemoClass {
 			}
 		}
 	}
+	
+	public static boolean isStringNum(String s) {
+	    try {
+	        Integer.parseInt(s);
+	        return true;
+	    } catch (NumberFormatException e) {
+	        return false;
+	    }
+    }
 	
 	void add() throws IOException {
 		BufferedReader tempContent = new BufferedReader(inputStreamReader);
@@ -334,7 +348,7 @@ class MemoClass {
 				return;
 			}
 		}
-		System.out.println("There is no memo number " + memoNumber + ". Check the memo number again with the view menu.");
+		System.out.println("There is no memo number. Check the memo number again with the view menu.");
 	}
 	
 	void fileSave(Object memo) throws IOException {
