@@ -1,4 +1,3 @@
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -33,7 +32,6 @@ public class UserClass {
 		
 		while(isNotEmpty(bufferedreader)){
 			String getSubstring = content.substring(0,3);
-			System.out.println(getSubstring);
 			
 			if(CheckIdAndPassword(getSubstring))
 				userId = content.substring(3);
@@ -99,8 +97,6 @@ public class UserClass {
 	}
 	
 	public void userMain() throws IOException {
-		String inputNumber = getInputNumber();
-		
 		while(true){
 			System.out.println("Please enter the task number.");
 			System.out.println("1.Change id or password");
@@ -109,6 +105,7 @@ public class UserClass {
 			System.out.println("4.Memo");
 			System.out.println("0.Logout");
 			System.out.print(">>>");
+			String inputNumber = getInputNumber();
 			ChooseAction(inputNumber);
 		}
 	}
@@ -119,6 +116,7 @@ public class UserClass {
 			ChangeInformationMain();
 			break;
 		case "2":
+			new PhonebookClass();
 			break;
 		case "3":
 			new ScheduleClass();
