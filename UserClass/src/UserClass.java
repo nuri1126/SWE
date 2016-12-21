@@ -338,17 +338,18 @@ class MemoClass {
 		}
 	}
 	
-	void delete(int memoNumber) {
+	boolean delete(int memoNumber) {
 		for(int i = 0 ; i < memoVector.size() ; i++){
 			Memo tempMemo = memoVector.get(i);
 			if(tempMemo.getMemoNumber()==memoNumber){
 				memoVector.remove(i);
 				updateNumber();
 				System.out.println("Memo " + memoNumber + " has been deleted!");
-				return;
+				return true;
 			}
 		}
 		System.out.println("There is no memo number. Check the memo number again with the view menu.");
+		return false;
 	}
 	
 	void fileSave(Object memo) throws IOException {
