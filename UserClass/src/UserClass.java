@@ -1,8 +1,11 @@
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
@@ -13,30 +16,91 @@ import java.util.Date;
 import java.util.Vector;
 
 public class UserClass {
-	String userId="1311713";
-	String userPassword="a1311713";
-	
+	private String userId = null;
+	private String userPassword = null;
+	boolean managePw = true;
+	boolean manageId = true;
+	boolean managingInfo = true;
+	String content = null;
+		
 	public UserClass() throws IOException {
+		getUserInfo();
 		login();
 	}
 	
+	public void getUserInfo() throws IOException {
+		BufferedReader bufferedreader = ReadUserInfoFile();
+		
+		while(isNotEmpty(bufferedreader)){
+			String getSubstring = content.substring(0,3);
+			System.out.println(getSubstring);
+			
+			if(CheckIdAndPassword(getSubstring))
+				userId = content.substring(3);
+			else
+				userPassword = content.substring(3);
+			
+		}
+	}
+	
+	public BufferedReader ReadUserInfoFile() throws FileNotFoundException{
+		FileReader filereader = null;
+		String path = UserClass.class.getResource("").getPath();
+		filereader =  new FileReader(path+"userInfo.txt");
+		BufferedReader bufferedreader = new BufferedReader(filereader,1024);
+		return bufferedreader;
+	}
+	
+	public String ReadPerOneline(BufferedReader bufferedreader) throws IOException{
+		content = bufferedreader.readLine();
+		return content;
+	}
+	
+	public boolean isNotEmpty(BufferedReader bufferedreader) throws FileNotFoundException, IOException{
+		if(ReadPerOneline(bufferedreader)!=null)
+			return true;
+		else
+			return false;
+	}
+	
+	public boolean CheckIdAndPassword(String getSubstring){
+		if(getSubstring.equals("id:"))
+			return true;
+		else
+			return false;
+	}
+		
+	
 	public void login() throws IOException {
 		System.out.print("Please enter your ID. \n>>>");
-		InputStreamReader inputStreamReader = new InputStreamReader(System.in);
-		BufferedReader inputId = new BufferedReader(inputStreamReader);
-		if(inputId.readLine().equals(userId)){
-			System.out.print("Please enter your password. \n>>>");
-			BufferedReader inputPassword = new BufferedReader(inputStreamReader);
-			if(inputPassword.readLine().equals(userPassword)){
-				System.out.println(userId+", "+"Welcome.");
+		String inputNumber = getInputNumber();
+		if(isIdAndPassword(inputNumber)){
+			System.out.print("Please enter your Password. \n>>>");
+			inputNumber = getInputNumber();
+			if(isIdAndPassword(inputNumber)){
 				userMain();
-			}else{System.out.print("Try again.");login();}
-		}else{System.out.print("Try again.");login();}
+			}else
+				rejectLogin();
+		}else
+			rejectLogin();
+	}
+	
+	public String getInputNumber() throws IOException{
+		InputStreamReader inputStreamReader = new InputStreamReader(System.in);
+		BufferedReader inputNumber = new BufferedReader(inputStreamReader);
+		return inputNumber.readLine();
+	}
+	
+	public boolean isIdAndPassword(String inputNumber) throws IOException {
+		if(inputNumber.equals(userId) || inputNumber.equals(userPassword)){
+			return true;
+		}else 
+			return false;
 	}
 	
 	public void userMain() throws IOException {
-		InputStreamReader inputStreamReader = new InputStreamReader(System.in);
-		BufferedReader inputNumber = new BufferedReader(inputStreamReader);
+		String inputNumber = getInputNumber();
+		
 		while(true){
 			System.out.println("Please enter the task number.");
 			System.out.println("1.Change id or password");
@@ -45,38 +109,43 @@ public class UserClass {
 			System.out.println("4.Memo");
 			System.out.println("0.Logout");
 			System.out.print(">>>");
-			switch(inputNumber.readLine()){
-			case "1":
-				ChangeInformationMain();
-				break;
-			case "2":
-				new PhonebookClass();
-				break;
-			case "3":
-				new ScheduleClass();
-				break;
-			case "4":
-				new MemoClass();
-				break;
-			case "0":
-				System.out.println("Goodbye.");
-				System.exit(0);
-				break;
-			}
+			ChooseAction(inputNumber);
 		}
 	}
 	
-	public void ChangeInformationMain() throws IOException{
-		InputStreamReader inputStreamReader = new InputStreamReader(System.in);
-		BufferedReader inputNumber = new BufferedReader(inputStreamReader);
-		boolean managingInfo = true;
-		while(true){
+	public void ChooseAction(String inputNumber) throws IOException{
+		switch(inputNumber){
+		case "1":
+			ChangeInformationMain();
+			break;
+		case "2":
+			break;
+		case "3":
+			new ScheduleClass();
+			break;
+		case "4":
+			new MemoClass();
+			break;
+		case "0":
+			System.out.println("Good-bye.");
+			System.exit(0);
+			break;
+		}
+	}
+	
+	public void rejectLogin() throws IOException{
+		System.out.print("It is wrong.");
+		login();
+	}
+	
+	public void ChangeInformationMain() throws IOException {
+		while(managingInfo){
 			System.out.println("Please enter the task number.");
 			System.out.println("1.Change id");
 			System.out.println("2.Change password");
 			System.out.println("0.Quit");
 			System.out.print(">>>");
-			switch(inputNumber.readLine()){
+			switch(getInputNumber()){
 			case "1":
 				ChangeId();
 				break;
@@ -90,18 +159,53 @@ public class UserClass {
 		}	
 	}
 	
-	public void ChangeId(){
-		
+	public void ChangeId() throws IOException {
+		FileWriter filewriter = new FileWriter(UserClass.class.getResource("").getPath()+"userInfo.txt");
+		String inputNumber = getInputNumber();
+
+		while(manageId){
+			System.out.println("Please enter your present ID.");
+			if(inputNumber.equals(userId)){
+				SaveChangedInformation(filewriter, manageId);
+				manageId = false;
+				
+			}
+		}
 	}
 	
-	public void ChangePassword(){
+	public void ChangePassword() throws IOException {
+		FileWriter filewriter = new FileWriter(UserClass.class.getResource("").getPath()+"userInfo.txt");
+		String inputNumber = getInputNumber();
 		
+		while(managePw){
+			System.out.println("Please enter your present Password.");
+			if(inputNumber.equals(userPassword)){
+				managePw = false;
+				SaveChangedInformation(filewriter, manageId);
+			}
+		}
+	}
+	
+	public void SaveChangedInformation(FileWriter filewriter, boolean manageId) throws IOException {
+		if(!manageId){
+			System.out.println("Please enter an ID to change.");
+			String changeId = getInputNumber();
+			userId = changeId;
+		}else{
+			System.out.println("Please enter an Password to change.");
+			String changepw = getInputNumber();
+			userPassword = changepw;
+		}
+		String saveContent = "id:"+userId+"\n"+"pw:"+userPassword;
+		filewriter.write(saveContent);
+		filewriter.close();
 	}
 	
 	public static void main(String[] args) throws IOException {
 		UserClass user = new UserClass();
 	}
 }
+
 class Memo implements Serializable {
 	private String memoContent;
 	private int memoNumber;
@@ -427,6 +531,7 @@ class Schedule implements Serializable {
 		return "["+scheduleNumber+"]"+"Content : " + scheduleContent + ", Date : " + scheduleDate;
 	}
 }
+
 class ScheduleClass {
 	InputStreamReader inputStreamReader = new InputStreamReader(System.in);
 	Vector<Schedule> scheduleVector = new Vector<Schedule>();
