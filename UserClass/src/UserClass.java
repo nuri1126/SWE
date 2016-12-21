@@ -1,5 +1,5 @@
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -18,6 +18,9 @@ import java.util.Vector;
 public class UserClass {
 	String userId = null;
 	String userPassword = null;
+	boolean managePw = true;
+	boolean manageId = true;
+	boolean managingInfo = true;
 	
 	public UserClass() throws IOException {
 		getUserInfo();
@@ -28,7 +31,7 @@ public class UserClass {
 		FileReader filereader = null;
 		String path = UserClass.class.getResource("").getPath();
 		try{
-			filereader =  new FileReader(path+"user.txt");
+			filereader =  new FileReader(path+"userInfo.txt");
 			String content = null;
 			BufferedReader bufferedreader = new BufferedReader(filereader,1024);
 			
@@ -51,21 +54,27 @@ public class UserClass {
 	
 	public void login() throws IOException {
 		System.out.print("회원님의 아이디를 입력해주세요. \n>>>");
-		InputStreamReader inputStreamReader = new InputStreamReader(System.in);
-		BufferedReader inputId = new BufferedReader(inputStreamReader);
-		if(inputId.readLine().equals(userId)){
+		BufferedReader inputNumber = getInputNumber();
+		if(isIdAndPassword(inputNumber)){
 			System.out.print("회원님의 패스워드를 입력해주세요. \n>>>");
-			BufferedReader inputPassword = new BufferedReader(inputStreamReader);
-			if(inputPassword.readLine().equals(userPassword)){
-				System.out.println(userId+"님, "+"환영합니다.");
+			if(isIdAndPassword(inputNumber)){
 				userMain();
-			}else{System.out.print("틀렸습니다.");login();}
-		}else{System.out.print("틀렸습니다.");login();}
+			}else
+				rejectLogin();
+		}else
+			rejectLogin();
+	}
+	
+	public boolean isIdAndPassword(BufferedReader inputNumber) throws IOException {
+		if(inputNumber.readLine().equals(userId) || inputNumber.readLine().equals(userPassword)){
+			return true;
+		}else 
+			return false;
 	}
 	
 	public void userMain() throws IOException {
-		InputStreamReader inputStreamReader = new InputStreamReader(System.in);
-		BufferedReader inputNumber = new BufferedReader(inputStreamReader);
+		BufferedReader inputNumber = getInputNumber();
+		
 		while(true){
 			System.out.println("원하는 작업을 입력하세요.");
 			System.out.println("1.Change id or password");
@@ -94,11 +103,16 @@ public class UserClass {
 		}
 	}
 	
+	public void rejectLogin() throws IOException{
+		System.out.print("틀렸습니다.");
+		login();
+	}
+	
 	public void ChangeInformationMain() throws IOException {
 		InputStreamReader inputStreamReader = new InputStreamReader(System.in);
 		BufferedReader inputNumber = new BufferedReader(inputStreamReader);
-		boolean managingInfo = true;
-		while(true){
+		
+		while(managingInfo){
 			System.out.println("원하는 작업을 입력하세요.");
 			System.out.println("1.Change id");
 			System.out.println("2.Change password");
@@ -119,64 +133,61 @@ public class UserClass {
 	}
 	
 	public void ChangeId() throws IOException {
-		FileWriter filewriter = new FileWriter(UserClass.class.getResource("").getPath()+"user.txt");
-		String content = null;
-		boolean manageId = true;
-		
-		InputStreamReader inputStreamReader = new InputStreamReader(System.in);
-		BufferedReader inputNumber = new BufferedReader(inputStreamReader);
-		String inputId,changeId;
+		FileWriter filewriter = new FileWriter(UserClass.class.getResource("").getPath()+"userInfo.txt");
+		BufferedReader inputNumber = getInputNumber();
+		String inputId;
+
 		while(manageId){
 			System.out.println("현재 아이디를 입력하세요.");
-			try {
-				inputId = inputNumber.readLine();
-				if(inputId.equals(userId)){
-					System.out.println("변결할 아이디를 입력하세요.");
-					changeId = inputNumber.readLine();
-					content = "id:"+changeId+"\n"+"pw:"+userPassword;
-					filewriter.write(content);
-					manageId = false;
-					filewriter.close();
-				}
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			inputId = inputNumber.readLine();
+			if(inputId.equals(userId)){
+				SaveChangedInformation(filewriter, inputNumber, manageId);
+				manageId = false;
+				filewriter.close();
 			}
 		}
 	}
 	
 	public void ChangePassword() throws IOException {
-		FileWriter filewriter = new FileWriter(UserClass.class.getResource("").getPath()+"user.txt");
-		String content = null;
-		BufferedWriter bufferedwriter = new BufferedWriter(filewriter,1024);
-		boolean managePw = true;
+		FileWriter filewriter = new FileWriter(UserClass.class.getResource("").getPath()+"userInfo.txt");
+		BufferedReader inputNumber = getInputNumber();
+		String inputpw;
 		
-		InputStreamReader inputStreamReader = new InputStreamReader(System.in);
-		BufferedReader inputNumber = new BufferedReader(inputStreamReader);
-		String inputpw,changepw;
 		while(managePw){
 			System.out.println("현재 패스워드를 입력하세요.");
-			try {
-				inputpw = inputNumber.readLine();
-				if(inputpw.equals(userPassword)){
-					System.out.println("변결할 패스워드를 입력하세요.");
-					changepw = inputNumber.readLine();
-					content = "id:"+userId+"\n"+"pw:"+changepw;
-					filewriter.write(content);
-					managePw = false;
-					filewriter.close();
-				}
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			inputpw = inputNumber.readLine();
+			if(inputpw.equals(userPassword)){
+				managePw = false;
+				SaveChangedInformation(filewriter, inputNumber, manageId);
+				filewriter.close();
 			}
 		}
-		
 	}
+	public BufferedReader getInputNumber() throws IOException{
+		InputStreamReader inputStreamReader = new InputStreamReader(System.in);
+		BufferedReader inputNumber = new BufferedReader(inputStreamReader);
+		return inputNumber;
+	}
+	
+	public void SaveChangedInformation(FileWriter filewriter, BufferedReader inputNumber, boolean manageId) throws IOException {
+		if(!manageId){
+			System.out.println("변결할 아이디를 입력하세요.");
+			String changeId = inputNumber.readLine();
+			userId = changeId;
+		}else{
+			System.out.println("변결할 패스워드를 입력하세요.");
+			String changepw = inputNumber.readLine();
+			userPassword = changepw;
+		}
+		String content = "id:"+userId+"\n"+"pw:"+userPassword;
+		filewriter.write(content);
+	}
+	
 	public static void main(String[] args) throws IOException {
 		UserClass user = new UserClass();
 	}
 }
+
 class Memo implements Serializable {
 	private String memoContent;
 	private int memoNumber;
