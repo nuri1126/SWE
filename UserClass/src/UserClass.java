@@ -18,11 +18,13 @@ import java.util.Vector;
 public class UserClass {
 	String userId = null;
 	String userPassword = null;
-	public UserClass() throws IOException{
+	
+	public UserClass() throws IOException {
 		getUserInfo();
 		login();
 	}
-	public void getUserInfo(){
+	
+	public void getUserInfo() {
 		FileReader filereader = null;
 		String path = UserClass.class.getResource("").getPath();
 		try{
@@ -42,7 +44,7 @@ public class UserClass {
 				}
 			}
 			filereader.close();
-		}catch(IOException e){
+		}catch(IOException e) {
 			System.out.println(e.toString());
 		}
 	}
@@ -92,7 +94,7 @@ public class UserClass {
 		}
 	}
 	
-	public void ChangeInformationMain() throws IOException{
+	public void ChangeInformationMain() throws IOException {
 		InputStreamReader inputStreamReader = new InputStreamReader(System.in);
 		BufferedReader inputNumber = new BufferedReader(inputStreamReader);
 		boolean managingInfo = true;
@@ -116,7 +118,7 @@ public class UserClass {
 		}	
 	}
 	
-	public void ChangeId() throws IOException{
+	public void ChangeId() throws IOException {
 		FileWriter filewriter = new FileWriter(UserClass.class.getResource("").getPath()+"user.txt");
 		String content = null;
 		boolean manageId = true;
@@ -143,7 +145,7 @@ public class UserClass {
 		}
 	}
 	
-	public void ChangePassword() throws IOException{
+	public void ChangePassword() throws IOException {
 		FileWriter filewriter = new FileWriter(UserClass.class.getResource("").getPath()+"user.txt");
 		String content = null;
 		BufferedWriter bufferedwriter = new BufferedWriter(filewriter,1024);
