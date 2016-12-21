@@ -24,12 +24,12 @@ public class UserClass {
 	
 	public UserClass() throws IOException {
 		getUserInfo();
-		login();
 	}
 	
-	public void getUserInfo() {
+	public void getUserInfo() throws IOException {
 		FileReader filereader = null;
 		String path = UserClass.class.getResource("").getPath();
+		System.out.println(path);
 		try{
 			filereader =  new FileReader(path+"userInfo.txt");
 			String content = null;
@@ -50,13 +50,15 @@ public class UserClass {
 		}catch(IOException e) {
 			System.out.println(e.toString());
 		}
+		login();
 	}
 	
 	public void login() throws IOException {
 		System.out.print("회원님의 아이디를 입력해주세요. \n>>>");
-		BufferedReader inputNumber = getInputNumber();
+		String inputNumber = getInputNumber().readLine();
 		if(isIdAndPassword(inputNumber)){
 			System.out.print("회원님의 패스워드를 입력해주세요. \n>>>");
+			inputNumber = getInputNumber().readLine();
 			if(isIdAndPassword(inputNumber)){
 				userMain();
 			}else
@@ -65,8 +67,14 @@ public class UserClass {
 			rejectLogin();
 	}
 	
-	public boolean isIdAndPassword(BufferedReader inputNumber) throws IOException {
-		if(inputNumber.readLine().equals(userId) || inputNumber.readLine().equals(userPassword)){
+	public BufferedReader getInputNumber() throws IOException{
+		InputStreamReader inputStreamReader = new InputStreamReader(System.in);
+		BufferedReader inputNumber = new BufferedReader(inputStreamReader);
+		return inputNumber;
+	}
+	
+	public boolean isIdAndPassword(String inputNumber) throws IOException {
+		if(inputNumber.equals(userId) || inputNumber.equals(userPassword)){
 			return true;
 		}else 
 			return false;
@@ -143,7 +151,7 @@ public class UserClass {
 			if(inputId.equals(userId)){
 				SaveChangedInformation(filewriter, inputNumber, manageId);
 				manageId = false;
-				filewriter.close();
+				
 			}
 		}
 	}
@@ -159,14 +167,9 @@ public class UserClass {
 			if(inputpw.equals(userPassword)){
 				managePw = false;
 				SaveChangedInformation(filewriter, inputNumber, manageId);
-				filewriter.close();
+				
 			}
 		}
-	}
-	public BufferedReader getInputNumber() throws IOException{
-		InputStreamReader inputStreamReader = new InputStreamReader(System.in);
-		BufferedReader inputNumber = new BufferedReader(inputStreamReader);
-		return inputNumber;
 	}
 	
 	public void SaveChangedInformation(FileWriter filewriter, BufferedReader inputNumber, boolean manageId) throws IOException {
@@ -181,6 +184,7 @@ public class UserClass {
 		}
 		String content = "id:"+userId+"\n"+"pw:"+userPassword;
 		filewriter.write(content);
+		filewriter.close();
 	}
 	
 	public static void main(String[] args) throws IOException {
