@@ -48,24 +48,24 @@ public class UserClass {
 	}
 	
 	public void login() throws IOException {
-		System.out.print("È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìµï¿½ ï¿½Ô·ï¿½ï¿½ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½. \n>>>");
+		System.out.print("È¸¿ø´ÔÀÇ ¾ÆÀÌµğ¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä. \n>>>");
 		InputStreamReader inputStreamReader = new InputStreamReader(System.in);
 		BufferedReader inputId = new BufferedReader(inputStreamReader);
 		if(inputId.readLine().equals(userId)){
-			System.out.print("È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ğ½ï¿½ï¿½ï¿½ï¿½å¸¦ ï¿½Ô·ï¿½ï¿½ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½. \n>>>");
+			System.out.print("È¸¿ø´ÔÀÇ ÆĞ½º¿öµå¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä. \n>>>");
 			BufferedReader inputPassword = new BufferedReader(inputStreamReader);
 			if(inputPassword.readLine().equals(userPassword)){
-				System.out.println(userId+"ï¿½ï¿½, "+"È¯ï¿½ï¿½ï¿½Õ´Ï´ï¿½.");
+				System.out.println(userId+"´Ô, "+"È¯¿µÇÕ´Ï´Ù.");
 				userMain();
-			}else{System.out.print("Æ²ï¿½È½ï¿½ï¿½Ï´ï¿½.");login();}
-		}else{System.out.print("Æ²ï¿½È½ï¿½ï¿½Ï´ï¿½.");login();}
+			}else{System.out.print("Æ²·È½À´Ï´Ù.");login();}
+		}else{System.out.print("Æ²·È½À´Ï´Ù.");login();}
 	}
 	
 	public void userMain() throws IOException {
 		InputStreamReader inputStreamReader = new InputStreamReader(System.in);
 		BufferedReader inputNumber = new BufferedReader(inputStreamReader);
 		while(true){
-			System.out.println("ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Û¾ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½.");
+			System.out.println("¿øÇÏ´Â ÀÛ¾÷À» ÀÔ·ÂÇÏ¼¼¿ä.");
 			System.out.println("1.Change id or password");
 			System.out.println("2.PhoneBook");
 			System.out.println("3.Schedule");
@@ -85,7 +85,7 @@ public class UserClass {
 				new MemoClass();
 				break;
 			case "0":
-				System.out.println("ï¿½È³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.");
+				System.out.println("¾È³çÈ÷°¡¼¼¿ä.");
 				System.exit(0);
 				break;
 			}
@@ -97,7 +97,7 @@ public class UserClass {
 		BufferedReader inputNumber = new BufferedReader(inputStreamReader);
 		boolean managingInfo = true;
 		while(true){
-			System.out.println("ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Û¾ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½.");
+			System.out.println("¿øÇÏ´Â ÀÛ¾÷À» ÀÔ·ÂÇÏ¼¼¿ä.");
 			System.out.println("1.Change id");
 			System.out.println("2.Change password");
 			System.out.println("0.Quit");
@@ -215,7 +215,7 @@ class MemoClass {
 		}
 		while(managingMemo){
 			System.out.println("----------MEMO----------");
-			System.out.println("ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Û¾ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½.");
+			System.out.println("¿øÇÏ´Â ÀÛ¾÷À» ÀÔ·ÂÇÏ¼¼¿ä.");
 			System.out.println("1.Add Memo");
 			System.out.println("2.View All Memo");
 			System.out.println("3.Delete Memo");
@@ -230,33 +230,33 @@ class MemoClass {
 					break;
 				case "3":
 					if(memoVector.isEmpty()){
-						System.out.println("ï¿½Ş¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
+						System.out.println("¸Ş¸ğ°¡ ¾ø½À´Ï´Ù.");
 						break;
 					}
 					BufferedReader tempNumber = new BufferedReader(inputStreamReader);
-					System.out.println("ï¿½ï¿½ï¿½ï¿½ ï¿½Ş¸ï¿½ ï¿½ï¿½È£ï¿½ï¿½ ï¿½Ô·ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½.");
+					System.out.println("Áö¿ï ¸Ş¸ğ ¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä.");
 					System.out.print(">>>");
 					int memoNumber = Integer.parseInt(tempNumber.readLine());
 					delete(memoNumber);
 					break;
 				case "0":
-					System.out.println("ï¿½Ş¸ï¿½ ï¿½Û¾ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
+					System.out.println("¸Ş¸ğ ÀÛ¾÷¿¡¼­ ³ª°©´Ï´Ù.");
 					fileSave(memoVector);
 					managingMemo = false;
 					break;
 				default :
-					System.out.println("0~3 ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ú¸ï¿½ ï¿½Ô·ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½!");
+					System.out.println("0~3 »çÀÌÀÇ ¼ıÀÚ¸¦ ÀÔ·ÂÇÏ¼¼¿ä!");
 					break;
 			}
 		}
 	}
 	void add() throws IOException {
 		BufferedReader tempContent = new BufferedReader(inputStreamReader);
-		System.out.println("ï¿½Ş¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½.");
+		System.out.println("¸Ş¸ğ ³»¿ëÀ» ÀÔ·ÂÇÏ¼¼¿ä.");
 		System.out.print(">>>");
 		String inputContent = tempContent.readLine();
 		while(true){
-			System.out.println("ï¿½Ş¸ï¿½ ï¿½ß°ï¿½ï¿½Ï½Ã°Ú½ï¿½ï¿½Ï±ï¿½?(Y/N)");
+			System.out.println("¸Ş¸ğ¸¦ Ãß°¡ÇÏ½Ã°Ú½À´Ï±î?(Y/N)");
 			System.out.print(">>>");
 			BufferedReader tempAnswer = new BufferedReader(inputStreamReader);
 			String answer = tempAnswer.readLine();
@@ -266,19 +266,19 @@ class MemoClass {
 				String today = transFormat.format(tempToday);
 				Memo memo = new Memo(inputContent, initialMemoNumber, today);
 				memoVector.add(memo);
-				System.out.println("ï¿½Ş¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ï¿½ï¿½ï¿½Ï´ï¿½!");
+				System.out.println("¸Ş¸ğ¸¦ ÀúÀåÇÏ¿´½À´Ï´Ù!");
 				updateNumber();
 				break;
 			} else if(answer.equals("N")){
-				System.out.println("ï¿½Ş¸ï¿½ ï¿½Û¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.");
+				System.out.println("¸Ş¸ğ ÀÛ¼ºÀ» Ãë¼ÒÇÕ´Ï´Ù.");
 				break;
 			} else
-				System.out.println("Y ï¿½Ç´ï¿½ Nï¿½ï¿½ ï¿½Ô·ï¿½ï¿½ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½!");
+				System.out.println("Y ¶Ç´Â N¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä!");
 		}
 	}
 	void view() {
 		if(memoVector.isEmpty()){
-			System.out.println("ï¿½Ş¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
+			System.out.println("¸Ş¸ğ°¡ ¾ø½À´Ï´Ù.");
 			return;
 		}
 		for(int i = 0 ; i < memoVector.size() ; i++){
@@ -291,11 +291,11 @@ class MemoClass {
 			if(tempMemo.getMemoNumber()==memoNumber){
 				memoVector.remove(i);
 				updateNumber();
-				System.out.println(memoNumber+"ï¿½ï¿½ ï¿½Ş¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ß½ï¿½ï¿½Ï´ï¿½!");
+				System.out.println(memoNumber+"¹ø ¸Ş¸ğ¸¦ »èÁ¦Çß½À´Ï´Ù!");
 				return;
 			}
 		}
-		System.out.println(memoNumber+"ï¿½ï¿½ï¿½ï¿½ ï¿½Ø´ï¿½ï¿½Ï´ï¿½ ï¿½Ş¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½. viewï¿½Ş´ï¿½ï¿½ï¿½ ï¿½Ş¸ï¿½ È®ï¿½ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½.");
+		System.out.println(memoNumber+"¹ø¿¡ ÇØ´çÇÏ´Â ¸Ş¸ğ°¡ ¾ø½À´Ï´Ù. view¸Ş´º·Î ¸Ş¸ğ¸¦ È®ÀÎÇÏ¼¼¿ä.");
 	}
 	void fileSave(Object memo) throws IOException {
 		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("memo.txt"));
@@ -309,144 +309,6 @@ class MemoClass {
 	void updateNumber() {
 		for(int i=0 ; i < memoVector.size() ; i++)
 			memoVector.get(i).setMemoNumber(i+1);
-	}
-}
-
-class Phonebook implements Serializable {
-	private String name;
-	private int phonebookNumber;
-	private String phonenumber;
-	public Phonebook(String name, int phonebookNumber, String phonenumber) {
-		this.name = name;
-		this.phonebookNumber = phonebookNumber;
-		this.phonenumber = phonenumber;
-	}
-	public int getPhonebookNumber() {
-		return phonebookNumber;
-	}
-	public void setPhonebookNumber(int phonebookNumber) {
-		this.phonebookNumber = phonebookNumber;
-	}
-	@Override
-	public String toString() {
-		return "["+phonebookNumber+"]"+"Name : " + name + ", Phone : " + phonenumber;
-	}
-}
-class PhonebookClass {
-	InputStreamReader inputStreamReader = new InputStreamReader(System.in);
-	Vector<Phonebook> phonebookVector = new Vector<Phonebook>();
-	final int initialPhonebookNumber = -1;
-	public PhonebookClass() throws IOException {
-		phonebookMain();
-	}
-	void phonebookMain() throws IOException {
-		BufferedReader inputNumber = new BufferedReader(inputStreamReader);
-		boolean managingPhonebook = true;
-		File file = new File("phonebook.txt");
-		if(file.exists()){
-			try {
-				fileOpen();
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-			}
-		}
-		while(managingPhonebook){
-			System.out.println("--------Phonebook--------");
-			System.out.println("ì›í•˜ëŠ” ì‘ì—…ì„ ì…ë ¥í•˜ì„¸ìš”.");
-			System.out.println("1.Add Phonebook");
-			System.out.println("2.View All Phonebook");
-			System.out.println("3.Delete Phonebook");
-			System.out.println("0.Quit");
-			System.out.print(">>>");
-			switch(inputNumber.readLine()){
-				case "1":
-					add();
-					break;
-				case "2":
-					view();
-					break;
-				case "3":
-					if(phonebookVector.isEmpty()){
-						System.out.println("ì£¼ì†Œì´ ì—†ìŠµë‹ˆë‹¤.");
-						break;
-					}
-					BufferedReader tempNumber = new BufferedReader(inputStreamReader);
-					System.out.println("ì§€ìš¸ ì£¼ì†Œ ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ì„¸ìš”.");
-					System.out.print(">>>");
-					int phonebookNumber = Integer.parseInt(tempNumber.readLine());
-					delete(phonebookNumber);
-					break;
-				case "0":
-					System.out.println("ì£¼ì†Œ ì‘ì—…ì—ì„œ ë‚˜ê°‘ë‹ˆë‹¤.");
-					fileSave(phonebookVector);
-					managingPhonebook = false;
-					break;
-				default :
-					System.out.println("0~3 ì‚¬ì´ì˜ ìˆ«ìë¥¼ ì…ë ¥í•˜ì„¸ìš”!");
-					break;
-			}
-		}
-	}
-	void add() throws IOException {
-		BufferedReader tempContent = new BufferedReader(inputStreamReader);
-		System.out.println("ì €ì¥í•˜ì‹¤ ì´ë¦„ ì…ë ¥í•˜ì„¸ìš”.");
-		System.out.print(">>>");
-		String inputName = tempContent.readLine();
-		System.out.println("í•¸ë“œí° ë²ˆí˜¸ë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”. (000-0000-0000)");
-		System.out.print(">>>");
-		String inputPhonenumber = tempContent.readLine();
-		
-		while(true){
-			System.out.println("ì£¼ì†Œì„ ì¶”ê°€í•˜ì‹œê² ìŠµë‹ˆê¹Œ?(Y/N)");
-			System.out.print(">>>");
-			BufferedReader tempAnswer = new BufferedReader(inputStreamReader);
-			String answer = tempAnswer.readLine();
-			if(answer.equals("Y")) {
-				Phonebook phonebook = new Phonebook(inputName, initialPhonebookNumber, inputPhonenumber);
-				phonebookVector.add(phonebook);
-				System.out.println("ì£¼ì†Œì„ ì €ì¥í•˜ì˜€ìŠµë‹ˆë‹¤!");
-				updateNumber();
-				break;
-			} else if(answer.equals("N")){
-				System.out.println("ì£¼ì†Œ ì‘ì„±ì„ ì·¨ì†Œí•©ë‹ˆë‹¤.");
-				break;
-			} else
-				System.out.println("Y ë˜ëŠ” Në¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”!");
-		}
-	}
-	void view() {
-		if(phonebookVector.isEmpty()){
-			System.out.println("ì£¼ì†Œë¡ ì—†ìŠµë‹ˆë‹¤.");
-			return;
-		}
-		for(int i = 0 ; i < phonebookVector.size() ; i++){
-			System.out.println(phonebookVector.get(i).toString());
-		}
-	}
-	void delete(int phonebookNumber) {
-		for(int i = 0 ; i < phonebookVector.size() ; i++){
-			Phonebook tempPhonebook = phonebookVector.get(i);
-			if(tempPhonebook.getPhonebookNumber()==phonebookNumber){
-				phonebookVector.remove(i);
-				updateNumber();
-				System.out.println(phonebookNumber+"ë²ˆ ì£¼ì†Œì„ ì‚­ì œí–ˆìŠµë‹ˆë‹¤~!");
-				return;
-			}
-		}
-		System.out.println(phonebookNumber+"ë²ˆì— í•´ë‹¹í•˜ëŠ” ì£¼ì†Œë¡ì´ ì—†ìŠµë‹ˆë‹¤. viewë©”ë‰´ë¡œ ì£¼ì†Œë¡ì„ í™•ì¸í•˜ì„¸ìš”.");
-	}
-	void fileSave(Object phonebook) throws IOException {
-		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("phonebook.txt"));
-		oos.writeObject(phonebook);
-		oos.close();
-	}
-	void fileOpen() throws FileNotFoundException, IOException, ClassNotFoundException	{
-		ObjectInputStream ois = new ObjectInputStream(new FileInputStream("phonebook.txt"));
-		phonebookVector = (Vector<Phonebook>) ois.readObject();
-	}
-	void updateNumber() {
-		for(int i=0 ; i < phonebookVector.size() ; i++)
-			phonebookVector.get(i).setPhonebookNumber(i+1);
 	}
 }
 
@@ -490,7 +352,7 @@ class ScheduleClass {
 		}
 		while(managingSchedule){
 			System.out.println("----------SCHEDULE----------");
-			System.out.println("ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Û¾ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½.");
+			System.out.println("¿øÇÏ´Â ÀÛ¾÷À» ÀÔ·ÂÇÏ¼¼¿ä.");
 			System.out.println("1.Add Schedule");
 			System.out.println("2.View All Schedule");
 			System.out.println("3.Delete Schedule");
@@ -505,56 +367,56 @@ class ScheduleClass {
 					break;
 				case "3":
 					if(scheduleVector.isEmpty()){
-						System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
+						System.out.println("½ºÄÉÁÙÀÌ ¾ø½À´Ï´Ù.");
 						break;
 					}
 					BufferedReader tempNumber = new BufferedReader(inputStreamReader);
-					System.out.println("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È£ï¿½ï¿½ ï¿½Ô·ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½.");
+					System.out.println("Áö¿ï ½ºÄÉÁÙ ¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä.");
 					System.out.print(">>>");
 					int scheduleNumber = Integer.parseInt(tempNumber.readLine());
 					delete(scheduleNumber);
 					break;
 				case "0":
-					System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Û¾ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
+					System.out.println("½ºÄÉÁÙ ÀÛ¾÷¿¡¼­ ³ª°©´Ï´Ù.");
 					fileSave(scheduleVector);
 					managingSchedule = false;
 					break;
 				default :
-					System.out.println("0~3 ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ú¸ï¿½ ï¿½Ô·ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½!");
+					System.out.println("0~3 »çÀÌÀÇ ¼ıÀÚ¸¦ ÀÔ·ÂÇÏ¼¼¿ä!");
 					break;
 			}
 		}
 	}
 	void add() throws IOException {
 		BufferedReader tempContent = new BufferedReader(inputStreamReader);
-		System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½.");
+		System.out.println("½ºÄÉÁÙ ³»¿ëÀ» ÀÔ·ÂÇÏ¼¼¿ä.");
 		System.out.print(">>>");
 		String inputContent = tempContent.readLine();
-		System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Â¥ï¿½ï¿½ ï¿½Ô·ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½.(yyyy-MM-dd)");
+		System.out.println("½ºÄÉÁÙ ³¯Â¥¸¦ ÀÔ·ÂÇÏ¼¼¿ä.(yyyy-MM-dd)");
 		System.out.print(">>>");
 		String inputDate = tempContent.readLine();
 		
 		while(true){
-			System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ï¿½Ï½Ã°Ú½ï¿½ï¿½Ï±ï¿½?(Y/N)");
+			System.out.println("½ºÄÉÁÙÀ» Ãß°¡ÇÏ½Ã°Ú½À´Ï±î?(Y/N)");
 			System.out.print(">>>");
 			BufferedReader tempAnswer = new BufferedReader(inputStreamReader);
 			String answer = tempAnswer.readLine();
 			if(answer.equals("Y")) {
 				Schedule schedule = new Schedule(inputContent, initialScheduleNumber, inputDate);
 				scheduleVector.add(schedule);
-				System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ï¿½ï¿½ï¿½Ï´ï¿½!");
+				System.out.println("½ºÄÉÁÙÀ» ÀúÀåÇÏ¿´½À´Ï´Ù!");
 				updateNumber();
 				break;
 			} else if(answer.equals("N")){
-				System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Û¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.");
+				System.out.println("½ºÄÉÁÙ ÀÛ¼ºÀ» Ãë¼ÒÇÕ´Ï´Ù.");
 				break;
 			} else
-				System.out.println("Y ï¿½Ç´ï¿½ Nï¿½ï¿½ ï¿½Ô·ï¿½ï¿½ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½!");
+				System.out.println("Y ¶Ç´Â N¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä!");
 		}
 	}
 	void view() {
 		if(scheduleVector.isEmpty()){
-			System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
+			System.out.println("½ºÄÉÁÙÀÌ ¾ø½À´Ï´Ù.");
 			return;
 		}
 		for(int i = 0 ; i < scheduleVector.size() ; i++){
@@ -567,11 +429,11 @@ class ScheduleClass {
 			if(tempSchedule.getScheduleNumber()==scheduleNumber){
 				scheduleVector.remove(i);
 				updateNumber();
-				System.out.println(scheduleNumber+"ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ß½ï¿½ï¿½Ï´ï¿½~!");
+				System.out.println(scheduleNumber+"¹ø ½ºÄÉÁÙÀ» »èÁ¦Çß½À´Ï´Ù~!");
 				return;
 			}
 		}
-		System.out.println(scheduleNumber+"ï¿½ï¿½ï¿½ï¿½ ï¿½Ø´ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½. viewï¿½Ş´ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½.");
+		System.out.println(scheduleNumber+"¹ø¿¡ ÇØ´çÇÏ´Â ½ºÄÉÁÙÀÌ ¾ø½À´Ï´Ù. view¸Ş´º·Î ½ºÄÉÁÙÀ» È®ÀÎÇÏ¼¼¿ä.");
 	}
 	void fileSave(Object schedule) throws IOException {
 		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("schedule.txt"));
