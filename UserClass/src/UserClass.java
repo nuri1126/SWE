@@ -16,49 +16,66 @@ import java.util.Date;
 import java.util.Vector;
 
 public class UserClass {
-	String userId = null;
-	String userPassword = null;
+	private String userId = null;
+	private String userPassword = null;
 	boolean managePw = true;
 	boolean manageId = true;
 	boolean managingInfo = true;
+	String content = null;
 	
 	public UserClass() throws IOException {
 		getUserInfo();
+		login();
 	}
 	
 	public void getUserInfo() throws IOException {
+		BufferedReader bufferedreader = ReadUserInfoFile();
+		
+		while(isNotEmpty(bufferedreader)){
+			String getSubstring = content.substring(0,3);
+			System.out.println(getSubstring);
+			
+			if(CheckIdAndPassword(getSubstring))
+				userId = content.substring(3);
+			else
+				userPassword = content.substring(3);
+			
+		}
+	}
+	
+	public BufferedReader ReadUserInfoFile() throws FileNotFoundException{
 		FileReader filereader = null;
 		String path = UserClass.class.getResource("").getPath();
-		System.out.println(path);
-		try{
-			filereader =  new FileReader(path+"userInfo.txt");
-			String content = null;
-			BufferedReader bufferedreader = new BufferedReader(filereader,1024);
-			
-			while((content=bufferedreader.readLine())!=null){
-				String getSubstring = content.substring(0,3);
-				System.out.println(getSubstring);
-				if(getSubstring.equals("id:")){
-					userId = content.substring(3);
-					System.out.println(userId);
-				}else if(getSubstring.equals("pw:")){
-					userPassword = content.substring(3);
-					System.out.println(userPassword);
-				}
-			}
-			filereader.close();
-		}catch(IOException e) {
-			System.out.println(e.toString());
-		}
-		login();
+		filereader =  new FileReader(path+"userInfo.txt");
+		BufferedReader bufferedreader = new BufferedReader(filereader,1024);
+		return bufferedreader;
+	}
+	
+	public String ReadPerOneline(BufferedReader bufferedreader) throws IOException{
+		content = bufferedreader.readLine();
+		return content;
+	}
+	
+	public boolean isNotEmpty(BufferedReader bufferedreader) throws FileNotFoundException, IOException{
+		if(ReadPerOneline(bufferedreader)!=null)
+			return true;
+		else
+			return false;
+	}
+	
+	public boolean CheckIdAndPassword(String getSubstring){
+		if(getSubstring.equals("id:"))
+			return true;
+		else
+			return false;
 	}
 	
 	public void login() throws IOException {
 		System.out.print("회원님의 아이디를 입력해주세요. \n>>>");
-		String inputNumber = getInputNumber().readLine();
+		String inputNumber = getInputNumber();
 		if(isIdAndPassword(inputNumber)){
 			System.out.print("회원님의 패스워드를 입력해주세요. \n>>>");
-			inputNumber = getInputNumber().readLine();
+			inputNumber = getInputNumber();
 			if(isIdAndPassword(inputNumber)){
 				userMain();
 			}else
@@ -67,10 +84,10 @@ public class UserClass {
 			rejectLogin();
 	}
 	
-	public BufferedReader getInputNumber() throws IOException{
+	public String getInputNumber() throws IOException{
 		InputStreamReader inputStreamReader = new InputStreamReader(System.in);
 		BufferedReader inputNumber = new BufferedReader(inputStreamReader);
-		return inputNumber;
+		return inputNumber.readLine();
 	}
 	
 	public boolean isIdAndPassword(String inputNumber) throws IOException {
@@ -81,7 +98,7 @@ public class UserClass {
 	}
 	
 	public void userMain() throws IOException {
-		BufferedReader inputNumber = getInputNumber();
+		String inputNumber = getInputNumber();
 		
 		while(true){
 			System.out.println("원하는 작업을 입력하세요.");
@@ -91,23 +108,27 @@ public class UserClass {
 			System.out.println("4.Memo");
 			System.out.println("0.Logout");
 			System.out.print(">>>");
-			switch(inputNumber.readLine()){
-			case "1":
-				ChangeInformationMain();
-				break;
-			case "2":
-				break;
-			case "3":
-				new ScheduleClass();
-				break;
-			case "4":
-				new MemoClass();
-				break;
-			case "0":
-				System.out.println("안녕히가세요.");
-				System.exit(0);
-				break;
-			}
+			ChooseAction(inputNumber);
+		}
+	}
+	
+	public void ChooseAction(String inputNumber) throws IOException{
+		switch(inputNumber){
+		case "1":
+			ChangeInformationMain();
+			break;
+		case "2":
+			break;
+		case "3":
+			new ScheduleClass();
+			break;
+		case "4":
+			new MemoClass();
+			break;
+		case "0":
+			System.out.println("안녕히가세요.");
+			System.exit(0);
+			break;
 		}
 	}
 	
@@ -117,16 +138,13 @@ public class UserClass {
 	}
 	
 	public void ChangeInformationMain() throws IOException {
-		InputStreamReader inputStreamReader = new InputStreamReader(System.in);
-		BufferedReader inputNumber = new BufferedReader(inputStreamReader);
-		
 		while(managingInfo){
 			System.out.println("원하는 작업을 입력하세요.");
 			System.out.println("1.Change id");
 			System.out.println("2.Change password");
 			System.out.println("0.Quit");
 			System.out.print(">>>");
-			switch(inputNumber.readLine()){
+			switch(getInputNumber()){
 			case "1":
 				ChangeId();
 				break;
@@ -142,14 +160,12 @@ public class UserClass {
 	
 	public void ChangeId() throws IOException {
 		FileWriter filewriter = new FileWriter(UserClass.class.getResource("").getPath()+"userInfo.txt");
-		BufferedReader inputNumber = getInputNumber();
-		String inputId;
+		String inputNumber = getInputNumber();
 
 		while(manageId){
 			System.out.println("현재 아이디를 입력하세요.");
-			inputId = inputNumber.readLine();
-			if(inputId.equals(userId)){
-				SaveChangedInformation(filewriter, inputNumber, manageId);
+			if(inputNumber.equals(userId)){
+				SaveChangedInformation(filewriter, manageId);
 				manageId = false;
 				
 			}
@@ -158,32 +174,29 @@ public class UserClass {
 	
 	public void ChangePassword() throws IOException {
 		FileWriter filewriter = new FileWriter(UserClass.class.getResource("").getPath()+"userInfo.txt");
-		BufferedReader inputNumber = getInputNumber();
-		String inputpw;
+		String inputNumber = getInputNumber();
 		
 		while(managePw){
 			System.out.println("현재 패스워드를 입력하세요.");
-			inputpw = inputNumber.readLine();
-			if(inputpw.equals(userPassword)){
+			if(inputNumber.equals(userPassword)){
 				managePw = false;
-				SaveChangedInformation(filewriter, inputNumber, manageId);
-				
+				SaveChangedInformation(filewriter, manageId);
 			}
 		}
 	}
 	
-	public void SaveChangedInformation(FileWriter filewriter, BufferedReader inputNumber, boolean manageId) throws IOException {
+	public void SaveChangedInformation(FileWriter filewriter, boolean manageId) throws IOException {
 		if(!manageId){
 			System.out.println("변결할 아이디를 입력하세요.");
-			String changeId = inputNumber.readLine();
+			String changeId = getInputNumber();
 			userId = changeId;
 		}else{
 			System.out.println("변결할 패스워드를 입력하세요.");
-			String changepw = inputNumber.readLine();
+			String changepw = getInputNumber();
 			userPassword = changepw;
 		}
-		String content = "id:"+userId+"\n"+"pw:"+userPassword;
-		filewriter.write(content);
+		String saveContent = "id:"+userId+"\n"+"pw:"+userPassword;
+		filewriter.write(saveContent);
 		filewriter.close();
 	}
 	
