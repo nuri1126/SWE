@@ -25,6 +25,10 @@ public class UserClass {
 		login();
 	}
 	
+	public String getUserId() {
+		return userId;
+	}
+	
 	public void getUserInfo() throws IOException {
 		BufferedReader bufferedreader = ReadUserInfoFile();
 		
@@ -41,7 +45,6 @@ public class UserClass {
 	
 	public BufferedReader ReadUserInfoFile() throws FileNotFoundException{
 		FileReader filereader = null;
-		//String path = UserClass.class.getResource("").getPath();
 		String path1 = System.getProperty("user.dir");
 		filereader =  new FileReader(path1+"\\userInfo.txt");
 		BufferedReader bufferedreader = new BufferedReader(filereader,1024);
@@ -71,10 +74,10 @@ public class UserClass {
 	public void login() throws IOException {
 		System.out.print("Please enter your ID. \n>>>");
 		String inputNumber = getInputNumber();
-		if(isIdAndPassword(inputNumber)){
+		if(isId(inputNumber)){
 			System.out.print("Please enter your Password. \n>>>");
 			inputNumber = getInputNumber();
-			if(isIdAndPassword(inputNumber)){
+			if(isPassword(inputNumber)){
 				userMain();
 			}else
 				rejectLogin();
@@ -88,8 +91,15 @@ public class UserClass {
 		return inputNumber.readLine();
 	}
 	
-	public boolean isIdAndPassword(String inputNumber) throws IOException {
-		if(inputNumber.equals(userId) || inputNumber.equals(userPassword)){
+	public boolean isId(String inputNumber) throws IOException {
+		if(inputNumber.equals(userId)){
+			return true;
+		}else 
+			return false;
+	}
+	
+	public boolean isPassword(String inputNumber) throws IOException {
+		if(inputNumber.equals(userPassword)){
 			return true;
 		}else 
 			return false;
@@ -158,47 +168,58 @@ public class UserClass {
 	}
 	
 	public void ChangeId() throws IOException {
-		String path1 = System.getProperty("user.dir");
-		FileWriter filewriter = new FileWriter(path1+"\\userInfo.txt");
-		String inputNumber = getInputNumber();
-
+		//String inputNumber = getInputNumber();
+		manageId = true;
 		while(manageId){
 			System.out.println("Please enter your present ID.");
+			String inputNumber = getInputNumber();
 			if(inputNumber.equals(userId)){
-				SaveChangedInformation(filewriter, manageId);
 				manageId = false;
-				
+				SaveChangedId(manageId);
 			}
 		}
 	}
 	
 	public void ChangePassword() throws IOException {
-		String path1 = System.getProperty("user.dir");
-		FileWriter filewriter = new FileWriter(path1+"\\userInfo.txt");
-		String inputNumber = getInputNumber();
-		
+		managePw = true;
 		while(managePw){
 			System.out.println("Please enter your present Password.");
+			String inputNumber = getInputNumber();
 			if(inputNumber.equals(userPassword)){
 				managePw = false;
-				SaveChangedInformation(filewriter, manageId);
+				SaveChangedPw(managePw);
 			}
 		}
 	}
 	
-	public void SaveChangedInformation(FileWriter filewriter, boolean manageId) throws IOException {
+	public void SaveChangedId(boolean manageId) throws IOException {
 		if(!manageId){
 			System.out.println("Please enter an ID to change.");
 			String changeId = getInputNumber();
 			userId = changeId;
-		}else{
+		}
+		SaveChangedInfoFile();
+	}
+	
+	public void SaveChangedPw(boolean manageId) throws IOException {
+		if(!managePw){
 			System.out.println("Please enter an Password to change.");
 			String changepw = getInputNumber();
 			userPassword = changepw;
 		}
+		SaveChangedInfoFile();
+	}
+	
+	public void SaveChangedInfoFile() {
+		String path1 = System.getProperty("user.dir");
 		String saveContent = "id:"+userId+"\n"+"pw:"+userPassword;
-		filewriter.write(saveContent);
-		filewriter.close();
+		try {
+			FileWriter filewriter = new FileWriter(path1+"\\userInfo.txt");
+			filewriter.write(saveContent);
+			filewriter.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public static void main(String[] args) throws IOException {
