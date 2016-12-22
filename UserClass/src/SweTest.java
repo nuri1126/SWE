@@ -3,7 +3,7 @@ import static org.junit.Assert.*;
 import java.io.IOException;
 import org.junit.Test;
 
-public class MemoTest {
+public class SweTest {
 	@Test
 	public void testIsStringNum() throws IOException {
 		MemoClass memo = new MemoClass();
@@ -17,10 +17,10 @@ public class MemoTest {
 	}
 	
 	@Test
-	public void testDelete() throws IOException {
+	public void testDelete() throws IOException, ClassNotFoundException {
 		MemoClass memo = new MemoClass();
+		memo.fileOpen();
 		int size = memo.memoVector.size();
-		System.out.println(size);
 		assertTrue(memo.delete(-100) == false);
 		assertTrue(memo.delete(-50) == false);
 		assertTrue(memo.delete(0) == false);
