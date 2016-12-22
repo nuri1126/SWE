@@ -43,8 +43,9 @@ public class UserClass {
 	
 	public BufferedReader ReadUserInfoFile() throws FileNotFoundException{
 		FileReader filereader = null;
-		String path = UserClass.class.getResource("").getPath();
-		filereader =  new FileReader(path+"userInfo.txt");
+		//String path = UserClass.class.getResource("").getPath();
+		String path1 = System.getProperty("user.dir");
+		filereader =  new FileReader(path1+"\\userInfo.txt");
 		BufferedReader bufferedreader = new BufferedReader(filereader,1024);
 		return bufferedreader;
 	}
@@ -158,7 +159,8 @@ public class UserClass {
 	}
 	
 	public void ChangeId() throws IOException {
-		FileWriter filewriter = new FileWriter(UserClass.class.getResource("").getPath()+"userInfo.txt");
+		String path1 = System.getProperty("user.dir");
+		FileWriter filewriter = new FileWriter(path1+"\\userInfo.txt");
 		String inputNumber = getInputNumber();
 
 		while(manageId){
@@ -172,7 +174,8 @@ public class UserClass {
 	}
 	
 	public void ChangePassword() throws IOException {
-		FileWriter filewriter = new FileWriter(UserClass.class.getResource("").getPath()+"userInfo.txt");
+		String path1 = System.getProperty("user.dir");
+		FileWriter filewriter = new FileWriter(path1+"\\userInfo.txt");
 		String inputNumber = getInputNumber();
 		
 		while(managePw){
