@@ -22,7 +22,6 @@ public class UserClass {
 		
 	public UserClass() throws IOException {
 		getUserInfo();
-		login();
 	}
 	
 	public String getUserId() {
@@ -34,19 +33,19 @@ public class UserClass {
 		
 		while(isNotEmpty(bufferedreader)){
 			String getSubstring = content.substring(0,3);
-			
-			if(CheckIdAndPassword(getSubstring))
+			if(CheckIdAndPassword(getSubstring)){
 				userId = content.substring(3);
-			else
-				userPassword = content.substring(3);
-			
+			}else
+				userPassword = content.substring(3);	
 		}
+		System.out.println("Want to login?(Y/N)");
+		if(getInputNumber().equals("Y"))
+			login();
 	}
 	
 	public BufferedReader ReadUserInfoFile() throws FileNotFoundException{
 		FileReader filereader = null;
-		String path1 = System.getProperty("user.dir");
-		filereader =  new FileReader(path1+"\\userInfo.txt");
+		filereader =  new FileReader(FilePath());
 		BufferedReader bufferedreader = new BufferedReader(filereader,1024);
 		return bufferedreader;
 	}
@@ -93,14 +92,26 @@ public class UserClass {
 	
 	public boolean isId(String inputNumber) throws IOException {
 		if(inputNumber.equals(userId)){
-			return true;
+			if(CheckinputNumberLength(inputNumber))
+				return true;
+			else
+				return false;
 		}else 
 			return false;
 	}
 	
+	public boolean CheckinputNumberLength(String inputNumber){
+		if(inputNumber.length() > 1)
+			return true;
+		else
+			return false;
+	}
 	public boolean isPassword(String inputNumber) throws IOException {
 		if(inputNumber.equals(userPassword)){
-			return true;
+			if(CheckinputNumberLength(inputNumber))
+				return true;
+			else
+				return false;
 		}else 
 			return false;
 	}
@@ -168,7 +179,6 @@ public class UserClass {
 	}
 	
 	public void ChangeId() throws IOException {
-		//String inputNumber = getInputNumber();
 		manageId = true;
 		while(manageId){
 			System.out.println("Please enter your present ID.");
@@ -211,15 +221,20 @@ public class UserClass {
 	}
 	
 	public void SaveChangedInfoFile() {
-		String path1 = System.getProperty("user.dir");
 		String saveContent = "id:"+userId+"\n"+"pw:"+userPassword;
 		try {
-			FileWriter filewriter = new FileWriter(path1+"\\userInfo.txt");
+			FileWriter filewriter = new FileWriter(FilePath());
 			filewriter.write(saveContent);
 			filewriter.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public String FilePath(){
+		String path = System.getProperty("user.dir");
+		path += "\\userInfo.txt";
+		return path;
 	}
 	
 	public static void main(String[] args) throws IOException {
