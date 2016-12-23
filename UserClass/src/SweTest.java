@@ -71,4 +71,13 @@ public class SweTest {
 		assertTrue(memo.delete(size) == true);
 		assertTrue(memo.delete(size/2) == true);
 	}
+	@Test
+	public void testScheduleDataExist() throws IOException {
+		ScheduleClass schedule = new ScheduleClass();
+		assertTrue(schedule.view(0)==true); 
+		assertTrue(schedule.view(-1)==true);
+		assertTrue(schedule.view(10)==true);
+		assertTrue(schedule.view(2000)==true);
+	}
+	
 }
