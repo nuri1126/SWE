@@ -44,9 +44,10 @@ class ScheduleClass {
    final static int initialScheduleNumber = -1;
    private static final String String = null;
    
-   static void scheduleMain() throws IOException {
+   static void scheduleMain() throws IOException, ClassNotFoundException {
       BufferedReader inputNumber = new BufferedReader(inputStreamReader);
       boolean managingSchedule = true;
+      fileOpen();
       while(managingSchedule){
          System.out.println("----------SCHEDULE----------");
          System.out.println("Please enter the task number.");
