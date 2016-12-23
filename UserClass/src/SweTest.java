@@ -12,19 +12,19 @@ import org.junit.Test;
 public class SweTest {
 	
 	@Test
-	public void testisId() throws IOException {
-		UserClass user = new UserClass();
+	public void testCheckIdAndPassword() throws IOException {
+		User user = new User("TEST");
 		String userid = user.getUserId();
-		assertTrue(user.isId(userid) == true);
-		assertTrue(user.isId("1") == false);
-		assertNotNull(user.isId(userid));
+		assertTrue(user.CheckIdAndPassword("id:") == true);
+		assertTrue(user.CheckIdAndPassword("pw:") == false);
+		assertTrue(user.CheckIdAndPassword("TEST") == false);
+		assertTrue(user.CheckIdAndPassword(userid) == false);
+		assertNotNull(user.CheckIdAndPassword("id:"));
 	}
-	
 	@Test
 	public void testFilePath() throws IOException{
-		UserClass user = new UserClass();
+		User user = new User("TEST");
 		assertNotNull(user.FilePath());
-		
 	}
 	
 	@Test

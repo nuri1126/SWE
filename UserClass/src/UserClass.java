@@ -12,16 +12,19 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Vector;
 
-public class UserClass {
+class User {
+	String content = null;
 	private String userId = null;
 	private String userPassword = null;
-	boolean managePw = true;
-	boolean manageId = true;
-	boolean managingInfo = true;
-	String content = null;
-		
-	public UserClass() throws IOException {
+	
+	public User() throws IOException {
 		getUserInfo();
+		UserClass user = new UserClass(userId,userPassword);
+	}
+	
+	public User(String title) throws IOException {
+		getUserInfo();
+		UserClass user = new UserClass(userId, userPassword, title);
 	}
 	
 	public String getUserId() {
@@ -30,7 +33,6 @@ public class UserClass {
 	
 	public void getUserInfo() throws IOException {
 		BufferedReader bufferedreader = ReadUserInfoFile();
-		
 		while(isNotEmpty(bufferedreader)){
 			String getSubstring = content.substring(0,3);
 			if(CheckIdAndPassword(getSubstring)){
@@ -38,9 +40,6 @@ public class UserClass {
 			}else
 				userPassword = content.substring(3);	
 		}
-		System.out.println("Want to login?(Y/N)");
-		if(getInputNumber().equals("Y"))
-			login();
 	}
 	
 	public BufferedReader ReadUserInfoFile() throws FileNotFoundException{
@@ -48,6 +47,12 @@ public class UserClass {
 		filereader =  new FileReader(FilePath());
 		BufferedReader bufferedreader = new BufferedReader(filereader,1024);
 		return bufferedreader;
+	}
+	
+	public String FilePath(){
+		String path = System.getProperty("user.dir");
+		path += "\\userInfo.txt";
+		return path;
 	}
 	
 	public String ReadPerOneline(BufferedReader bufferedreader) throws IOException{
@@ -68,7 +73,29 @@ public class UserClass {
 		else
 			return false;
 	}
-		
+	
+	public String getInputNumber() throws IOException{
+		InputStreamReader inputStreamReader = new InputStreamReader(System.in);
+		BufferedReader inputNumber = new BufferedReader(inputStreamReader);
+		return inputNumber.readLine();
+	}
+}
+public class UserClass {
+	String userId = null;
+	String userPassword = null;
+	boolean managePw = true;
+	boolean manageId = true;
+	boolean managingInfo = true;
+	
+	public UserClass(String userId, String userPassword, String title) {
+		this.userId = userId;
+		this.userPassword = userPassword;
+	}
+	public UserClass(String userId, String userPassword) throws IOException {
+		this.userId = userId;
+		this.userPassword = userPassword;
+		login();
+	}
 	
 	public void login() throws IOException {
 		System.out.print("Please enter your ID. \n>>>");
@@ -236,9 +263,8 @@ public class UserClass {
 		path += "\\userInfo.txt";
 		return path;
 	}
-	
 	public static void main(String[] args) throws IOException {
-		UserClass user = new UserClass();
+		User user = new User();
 	}
 }
 
