@@ -30,7 +30,24 @@ public class SweTest {
 		assertTrue(userclass.isId(user.getUserPassword()) == false);
 		assertNotNull(userclass.isId("test"));
 	}
-
+	
+	@Test
+	public void testPhonebookEmpty() throws IOException {
+		PhonebookClass phonebook = new PhonebookClass();
+		assertTrue(phonebook.phonebookVector.isEmpty() == true);
+		assertNotNull(phonebook.phonebookVector.isEmpty());
+	}
+	
+	@Test
+	public void testEqualPhonebookNumber() throws IOException {
+		PhonebookClass phonebook = new PhonebookClass();
+		int size = phonebook.phonebookVector.size();
+		assertTrue(phonebook.equalPhonebookNumber(1,1) == true);
+		assertTrue(phonebook.equalPhonebookNumber(2,1) == false);
+		assertTrue(phonebook.equalPhonebookNumber(size,-1) == false);
+		assertTrue(phonebook.equalPhonebookNumber(size,0) == false);
+	}
+	
 	@Test
 	public void testIsStringNum() throws IOException {
 		MemoClass memo = new MemoClass();

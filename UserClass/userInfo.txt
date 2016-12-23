@@ -1,2 +1,2 @@
-id:test1
-pw:test1
+id:test
+pw:test
