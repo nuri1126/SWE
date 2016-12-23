@@ -17,7 +17,7 @@ class User {
 	private String userId = null;
 	private String userPassword = null;
 	
-	public User() throws IOException {
+	public User() throws IOException, ClassNotFoundException {
 		getUserInfo();
 		UserClass user = new UserClass(userId,userPassword);
 	}
@@ -94,13 +94,13 @@ public class UserClass {
 		this.userId = userId;
 		this.userPassword = userPassword;
 	}
-	public UserClass(String userId, String userPassword) throws IOException {
+	public UserClass(String userId, String userPassword) throws IOException, ClassNotFoundException {
 		this.userId = userId;
 		this.userPassword = userPassword;
 		login();
 	}
 	
-	public void login() throws IOException {
+	public void login() throws IOException, ClassNotFoundException {
 		System.out.print("Please enter your ID. \n>>>");
 		String inputNumber = getInputNumber();
 		if(isId(inputNumber)){
@@ -134,7 +134,7 @@ public class UserClass {
 			return false;
 	}
 	
-	public void userMain() throws IOException {
+	public void userMain() throws IOException, ClassNotFoundException {
 		while(true){
 			System.out.println("Please enter the task number.");
 			System.out.println("1.Change id or password");
@@ -148,7 +148,7 @@ public class UserClass {
 		}
 	}
 	
-	public void ChooseAction(String inputNumber) throws IOException{
+	public void ChooseAction(String inputNumber) throws IOException, ClassNotFoundException{
 		switch(inputNumber){
 		case "1":
 			ChangeInformationMain();
@@ -171,7 +171,7 @@ public class UserClass {
 		}
 	}
 	
-	public void rejectLogin() throws IOException{
+	public void rejectLogin() throws IOException, ClassNotFoundException{
 		System.out.print("It is wrong.");
 		login();
 	}
@@ -255,158 +255,7 @@ public class UserClass {
 		path += "\\userInfo.txt";
 		return path;
 	}
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException, ClassNotFoundException {
 		User user = new User();
-	}
-}
-
-class Schedule implements Serializable {
-	private String scheduleContent;
-	private int scheduleNumber;
-	private String scheduleDate;
-	
-	public Schedule(String scheduleContent, int scheduleNumber, String scheduleDate) {
-		this.scheduleContent = scheduleContent;
-		this.scheduleNumber = scheduleNumber;
-		this.scheduleDate = scheduleDate;
-	}
-	
-	public int getScheduleNumber() {
-		return scheduleNumber;
-	}
-	
-	public void setScheduleNumber(int scheduleNumber) {
-		this.scheduleNumber = scheduleNumber;
-	}
-	
-	@Override
-	public String toString() {
-		return "["+scheduleNumber+"]"+"Content : " + scheduleContent + ", Date : " + scheduleDate;
-	}
-}
-
-class ScheduleClass {
-	InputStreamReader inputStreamReader = new InputStreamReader(System.in);
-	Vector<Schedule> scheduleVector = new Vector<Schedule>();
-	final int initialScheduleNumber = -1;
-	
-	public ScheduleClass() throws IOException {
-		scheduleMain();
-	}
-	
-	void scheduleMain() throws IOException {
-		BufferedReader inputNumber = new BufferedReader(inputStreamReader);
-		boolean managingSchedule = true;
-		File file = new File("schedule.txt");
-		if(file.exists()){
-			try {
-				fileOpen();
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-			}
-		}
-		while(managingSchedule){
-			System.out.println("----------SCHEDULE----------");
-			System.out.println("Please enter the task number.");
-			System.out.println("1.Add Schedule");
-			System.out.println("2.View All Schedule");
-			System.out.println("3.Delete Schedule");
-			System.out.println("0.Quit");
-			System.out.print(">>>");
-			switch(inputNumber.readLine()){
-				case "1":
-					add();
-					break;
-				case "2":
-					view();
-					break;
-				case "3":
-					if(scheduleVector.isEmpty()){
-						System.out.println("There are no schedule.");
-						break;
-					}
-					BufferedReader tempNumber = new BufferedReader(inputStreamReader);
-					System.out.println("Please enter the schedule number to clear.");
-					System.out.print(">>>");
-					int scheduleNumber = Integer.parseInt(tempNumber.readLine());
-					delete(scheduleNumber);
-					break;
-				case "0":
-					System.out.println("Leave the schedule menu.");
-					fileSave(scheduleVector);
-					managingSchedule = false;
-					break;
-				default :
-					System.out.println("Please enter a number between 0 and 3!");
-					break;
-			}
-		}
-	}
-	
-	void add() throws IOException {
-		BufferedReader tempContent = new BufferedReader(inputStreamReader);
-		System.out.println("Please enter your schedule.");
-		System.out.print(">>>");
-		String inputContent = tempContent.readLine();
-		System.out.println("Please enter the date.(yyyy-MM-dd)");
-		System.out.print(">>>");
-		String inputDate = tempContent.readLine();
-		
-		while(true){
-			System.out.println("Would you like to add a schedule? (Y/N)");
-			System.out.print(">>>");
-			BufferedReader tempAnswer = new BufferedReader(inputStreamReader);
-			String answer = tempAnswer.readLine();
-			if(answer.equals("Y")) {
-				Schedule schedule = new Schedule(inputContent, initialScheduleNumber, inputDate);
-				scheduleVector.add(schedule);
-				System.out.println("You have saved your schedule!");
-				updateNumber();
-				break;
-			} else if(answer.equals("N")){
-				System.out.println("You have canceled the creation.");
-				break;
-			} else
-				System.out.println("Please enter Y or N!");
-		}
-	}
-	
-	void view() {
-		if(scheduleVector.isEmpty()){
-			System.out.println("There are no schedule.");
-			return;
-		}
-		for(int i = 0 ; i < scheduleVector.size() ; i++){
-			System.out.println(scheduleVector.get(i).toString());
-		}
-	}
-	
-	void delete(int scheduleNumber) {
-		for(int i = 0 ; i < scheduleVector.size() ; i++){
-			Schedule tempSchedule = scheduleVector.get(i);
-			if(tempSchedule.getScheduleNumber()==scheduleNumber){
-				scheduleVector.remove(i);
-				updateNumber();
-				System.out.println("Schedule " + scheduleNumber + " has been deleted!");
-				return;
-			}
-		}
-		System.out.println("There is no schedule number " + scheduleNumber + ". Check the schedule number again with the view menu.");
-	}
-	
-	void fileSave(Object schedule) throws IOException {
-		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("schedule.txt"));
-		oos.writeObject(schedule);
-		oos.close();
-	}
-	
-	void fileOpen() throws FileNotFoundException, IOException, ClassNotFoundException	{
-		ObjectInputStream ois = new ObjectInputStream(new FileInputStream("schedule.txt"));
-		scheduleVector = (Vector<Schedule>) ois.readObject();
-	}
-	
-	void updateNumber() {
-		for(int i=0 ; i < scheduleVector.size() ; i++)
-			scheduleVector.get(i).setScheduleNumber(i+1);
 	}
 }

@@ -22,25 +22,43 @@ public class SweTest {
 		assertNotNull(user.CheckIdAndPassword("id:"));
 	}
 	
-	@Test
-	public void testIsId() throws IOException{
-		User user = new User("TEST");
-		UserClass userclass = new UserClass(user.getUserId(),user.getUserPassword(),"TEST");
-		assertTrue(userclass.isId(user.getUserId()) == true);
-		assertTrue(userclass.isId(user.getUserPassword()) == false);
-		assertNotNull(userclass.isId("test"));
+   @Test
+   public void testIsId() throws IOException{
+      User user = new User("TEST");
+	  UserClass userclass = new UserClass(user.getUserId(),user.getUserPassword(),"TEST");
+	  String testString = user.getUserPassword()+"TEST";
+	  assertTrue(userclass.isId(user.getUserId()) == true);
+	  assertTrue(userclass.isId(testString) == false);
+	  assertNotNull(userclass.isId("test"));
+   }
+	
+   @Test
+   public void testPhonebookEmpty() throws IOException, ClassNotFoundException {
+	   PhonebookClass phonebook = new PhonebookClass();
+	   phonebook.fileOpen();
+	   int size = phonebook.phonebookVector.size();
+	   assertNotNull(phonebook.isPhonebookEmpty());
+	   assertEquals(isEmpty(size, phonebook),true);
+   }
+   
+   public boolean isEmpty(int size, PhonebookClass phonebook) {
+	   if(size == 0) {
+		   if(phonebook.isPhonebookEmpty() == true)
+			   return true;
+		   else
+			   return false;
+	      }else{
+	    	  if(phonebook.isPhonebookEmpty() == false)
+	    		  return true;
+	    	  else
+	    		  return false;
+	      }
 	}
 	
 	@Test
-	public void testPhonebookEmpty() throws IOException {
+	public void testEqualPhonebookNumber() throws IOException, ClassNotFoundException {
 		PhonebookClass phonebook = new PhonebookClass();
-		assertTrue(phonebook.phonebookVector.isEmpty() == true);
-		assertNotNull(phonebook.phonebookVector.isEmpty());
-	}
-	
-	@Test
-	public void testEqualPhonebookNumber() throws IOException {
-		PhonebookClass phonebook = new PhonebookClass();
+		phonebook.fileOpen();
 		int size = phonebook.phonebookVector.size();
 		assertTrue(phonebook.equalPhonebookNumber(1,1) == true);
 		assertTrue(phonebook.equalPhonebookNumber(2,1) == false);
@@ -71,4 +89,13 @@ public class SweTest {
 		assertTrue(memo.delete(size) == true);
 		assertTrue(memo.delete(size/2) == true);
 	}
+	
+   @Test
+   public void testScheduleDataExist() throws IOException {
+      ScheduleClass schedule = new ScheduleClass();
+      assertTrue(schedule.view(0)==true); 
+      assertTrue(schedule.view(-1)==false);
+      assertTrue(schedule.view(10)==false);
+      assertTrue(schedule.view(2000)==false);
+   }
 }

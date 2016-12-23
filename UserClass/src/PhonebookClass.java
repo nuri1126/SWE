@@ -41,17 +41,10 @@ class PhonebookClass {
 	Vector<Phonebook> phonebookVector = new Vector<Phonebook>();
 	final static int initialPhonebookNumber = -1;
 	
-	public void phonebookMain() throws IOException {
+	public void phonebookMain() throws IOException, ClassNotFoundException {
 		BufferedReader inputNumber = new BufferedReader(inputStreamReader);
 		boolean managingPhonebook = true;
-		File file = new File("phonebook.txt");
-		if(file.exists()){
-			try {
-				fileOpen();
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-			}
-		}
+		fileOpen();
 		while(managingPhonebook){
 			System.out.println("--------Phonebook--------");
 			System.out.println("Please enter the task number.");
@@ -164,8 +157,15 @@ class PhonebookClass {
 	}
 	
 	void fileOpen() throws FileNotFoundException, IOException, ClassNotFoundException	{
-		ObjectInputStream ois = new ObjectInputStream(new FileInputStream("phonebook.txt"));
-		phonebookVector = (Vector<Phonebook>) ois.readObject();
+		File file = new File("phonebook.txt");
+		try {
+			if(file.exists()){
+				ObjectInputStream ois = new ObjectInputStream(new FileInputStream("phonebook.txt"));
+				phonebookVector = (Vector<Phonebook>) ois.readObject();
+			}
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	void updateNumber() {

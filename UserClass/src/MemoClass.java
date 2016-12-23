@@ -42,9 +42,10 @@ class MemoClass {
 	static Vector<Memo> memoVector = new Vector<Memo>();
 	final static int initialMemoNumber = -1;
 	
-	static void memoMain() throws IOException {
+	static void memoMain() throws IOException, ClassNotFoundException {
 		BufferedReader inputNumber = new BufferedReader(inputStreamReader);
 		boolean managingMemo = true;
+		fileOpen();
 		while(managingMemo){
 			System.out.println("----------MEMO----------");
 			System.out.println("Please enter the task number.");
