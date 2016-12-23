@@ -90,12 +90,22 @@ public class SweTest {
 		assertTrue(memo.delete(size/2) == true);
 	}
 
-	@Test
-	public void testScheduleDataExist() throws IOException {
-		ScheduleClass schedule = new ScheduleClass();
-		assertTrue(schedule.view(0)==true); 
-		assertTrue(schedule.view(-1)==true);
-		assertTrue(schedule.view(10)==true);
-		assertTrue(schedule.view(2000)==true);
-	}
+  @Test
+   public void testScheduleDataExist() throws IOException {
+      ScheduleClass schedule = new ScheduleClass();
+      assertTrue(schedule.view(0)==true); 
+      assertTrue(schedule.view(-1)==false);
+      assertTrue(schedule.view(10)==false);
+      assertTrue(schedule.view(2000)==false);
+   }
+  @Test
+  public void testScheduleLength(){
+      ScheduleClass schedule = new ScheduleClass();
+      assertTrue(schedule.checkScheduleLength(-1)==false);
+      assertTrue(schedule.checkScheduleLength(0)==false);
+      assertTrue(schedule.checkScheduleLength(9)==false);
+      assertTrue(schedule.checkScheduleLength(11)==true);
+      assertTrue(schedule.checkScheduleLength(10)==true);
+      assertTrue(schedule.checkScheduleLength(1000)==true);
+   }   
 }
