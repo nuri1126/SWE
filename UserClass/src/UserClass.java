@@ -158,7 +158,8 @@ public class UserClass {
 			phone.phonebookMain();
 			break;
 		case "3":
-			new ScheduleClass();
+			ScheduleClass schedule = new ScheduleClass();
+			schedule.scheduleMain();
 			break;
 		case "4":
 			MemoClass memo = new MemoClass();
