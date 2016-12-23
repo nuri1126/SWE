@@ -21,12 +21,16 @@ public class SweTest {
 		assertTrue(user.CheckIdAndPassword(userid) == false);
 		assertNotNull(user.CheckIdAndPassword("id:"));
 	}
-	@Test
-	public void testFilePath() throws IOException{
-		User user = new User("TEST");
-		assertNotNull(user.FilePath());
-	}
 	
+	@Test
+	public void testIsId() throws IOException{
+		User user = new User("TEST");
+		UserClass userclass = new UserClass(user.getUserId(),user.getUserPassword(),"TEST");
+		assertTrue(userclass.isId(user.getUserId()) == true);
+		assertTrue(userclass.isId(user.getUserPassword()) == false);
+		assertNotNull(userclass.isId("test"));
+	}
+
 	@Test
 	public void testIsStringNum() throws IOException {
 		MemoClass memo = new MemoClass();

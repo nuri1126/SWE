@@ -24,11 +24,14 @@ class User {
 	
 	public User(String title) throws IOException {
 		getUserInfo();
-		UserClass user = new UserClass(userId, userPassword, title);
 	}
 	
 	public String getUserId() {
 		return userId;
+	}
+	
+	public String getUserPassword() {
+		return userPassword;
 	}
 	
 	public void getUserInfo() throws IOException {
@@ -119,26 +122,14 @@ public class UserClass {
 	
 	public boolean isId(String inputNumber) throws IOException {
 		if(inputNumber.equals(userId)){
-			if(CheckinputNumberLength(inputNumber))
-				return true;
-			else
-				return false;
+			return true;
 		}else 
 			return false;
 	}
 	
-	public boolean CheckinputNumberLength(String inputNumber){
-		if(inputNumber.length() > 1)
-			return true;
-		else
-			return false;
-	}
 	public boolean isPassword(String inputNumber) throws IOException {
 		if(inputNumber.equals(userPassword)){
-			if(CheckinputNumberLength(inputNumber))
-				return true;
-			else
-				return false;
+			return true;
 		}else 
 			return false;
 	}
